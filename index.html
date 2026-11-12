@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+<html lang="id" class="light scroll-smooth" data-theme="light">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ANZA Tech: Jasa Pembuatan Aplikasi Usaha, Kasir Toko &amp; Sistem Kantor</title>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231D4ED8'/%3E%3Ctext x='32' y='41' text-anchor='middle' fill='%23FFFFFF' font-family='sans-serif' font-size='26' font-weight='800'%3EAZ%3C/text%3E%3C/svg%3E" />
+  <meta name="description"
+    content="ANZA Tech membantu pemilik usaha membuat aplikasi pembukuan pabrik, stok gudang, absensi karyawan via HP, program kasir toko tanpa internet, dan penataan jaringan kantor." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Source+Sans+3:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Source Sans 3"', 'system-ui', 'sans-serif'],
+            sans: ['"Source Sans 3"', 'system-ui', 'sans-serif'],
+            mono: ['"IBM Plex Mono"', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    :root,
+    html[data-theme='light'] {
+      --bg-canvas: #F8FAFC;
+      --bg-surface: #FFFFFF;
+      --bg-subtle: #F1F5F9;
+      --text-primary: #0F172A;
+      --text-secondary: #334155;
+      --border-hairline: #CBD5E1;
+      --border-control: #64748B;
+      --accent-primary: #1D4ED8;
+      --accent-hover: #1E40AF;
+      --accent-contrast: #FFFFFF;
+      --accent-soft-bg: #EFF6FF;
+      --accent-soft-border: #BFDBFE;
+      --featured-text: #92400E;
+      --featured-bg: #FEF3C7;
+      --featured-border: #F59E0B;
+      --status-bg: #ECFDF5;
+      --status-text: #065F46;
+      --status-border: #A7F3D0;
+      --danger-text: #991B1B;
+      --danger-border: #B91C1C;
+    }
+
+    html[data-theme='dark'] {
+      --bg-canvas: #090D16;
+      --bg-surface: #111827;
+      --bg-subtle: #1E293B;
+      --text-primary: #F8FAFC;
+      --text-secondary: #CBD5E1;
+      --border-hairline: #1E293B;
+      --border-control: #64748B;
+      --accent-primary: #60A5FA;
+      --accent-hover: #93C5FD;
+      --accent-contrast: #090D16;
+      --accent-soft-bg: #1E293B;
+      --accent-soft-border: #334155;
+      --featured-text: #FBBF24;
+      --featured-bg: #1E293B;
+      --featured-border: #D97706;
+      --status-bg: #064E3B;
+      --status-text: #A7F3D0;
+      --status-border: #047857;
+      --danger-text: #FCA5A5;
+      --danger-border: #EF4444;
+    }
+
+    body {
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      font-family: 'Source Sans 3', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      caret-color: var(--accent-primary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    h1 {
+      font-size: clamp(1.85rem, 2.6vw + 0.75rem, 2.65rem);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      font-weight: 800;
+    }
+
+    h2 {
+      font-size: clamp(1.4rem, 1.5vw + 0.5rem, 1.75rem);
+      line-height: 1.28;
+      letter-spacing: -0.015em;
+      font-weight: 700;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      line-height: 1.35;
+      font-weight: 700;
+    }
+
+    ::selection {
+      background-color: var(--accent-primary);
+      color: var(--accent-contrast);
+    }
+
+    /* R-39: Base layer cursor rules */
+    a[href],
+    button:not(:disabled),
+    summary,
+    select:not(:disabled),
+    label[for],
+    input[type='checkbox']:not(:disabled),
+    input[type='radio']:not(:disabled),
+    [role='button']:not([aria-disabled='true']),
+    [role='tab']:not([aria-disabled='true']),
+    [role='switch']:not([aria-disabled='true']) {
+      cursor: pointer;
+    }
+
+    button:disabled,
+    input:disabled,
+    select:disabled,
+    textarea:disabled,
+    [aria-disabled='true'] {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    /* R-32: Indikator fokus keyboard terlihat jelas */
+    :focus-visible {
+      outline: 2px solid var(--accent-primary);
+      outline-offset: 2px;
+    }
+
+    .surface-canvas {
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+    }
+
+    .surface-card {
+      background-color: var(--bg-surface);
+      border-color: var(--border-hairline);
+      padding: 1.25rem;
+    }
+
+    header.surface-card,
+    footer.surface-card,
+    nav.surface-card {
+      padding: 0.75rem 1rem;
+    }
+
+    .surface-subtle {
+      background-color: var(--bg-subtle);
+      border-color: var(--border-hairline);
+      padding: 0.75rem;
+    }
+
+    .surface-banner {
+      background-color: var(--bg-surface);
+      border-color: var(--border-control);
+      color: var(--text-primary);
+      padding: 0.75rem 1rem;
+    }
+
+    .banner-tag {
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+      padding: 0.25rem 0.625rem;
+    }
+
+    .border-structural {
+      border-color: var(--border-hairline);
+    }
+
+    .border-interactive {
+      border-color: var(--border-control);
+    }
+
+    .text-main {
+      color: var(--text-primary);
+    }
+
+    .text-muted {
+      color: var(--text-secondary);
+    }
+
+    .text-brand {
+      color: var(--accent-primary);
+    }
+
+    .badge-status-green {
+      background-color: var(--status-bg);
+      color: var(--status-text);
+      border: 1px solid var(--status-border);
+      padding: 0.5rem 0.875rem;
+    }
+
+    .badge-blue {
+      background-color: var(--accent-soft-bg);
+      color: var(--accent-primary);
+      border: 1px solid var(--accent-soft-border);
+      padding: 0.25rem 0.625rem;
+    }
+
+    .badge-featured {
+      background-color: var(--featured-bg);
+      color: var(--featured-text);
+      border: 1px solid var(--featured-border);
+      padding: 0.25rem 0.625rem;
+    }
+
+    /* R-13: Radius konsentris (Card 16px > Button/Input 10px > Tag 6px) */
+    .btn-primary {
+      background-color: var(--accent-primary);
+      color: var(--accent-contrast);
+      border: 1px solid var(--accent-primary);
+      border-radius: 10px;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--accent-hover);
+      border-color: var(--accent-hover);
+    }
+
+    .btn-primary:active {
+      transform: translateY(1px);
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-surface);
+      color: var(--text-primary);
+      border: 1px solid var(--border-control);
+      border-radius: 10px;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+    }
+
+    .btn-secondary:active {
+      transform: translateY(1px);
+    }
+
+    .filter-pill {
+      background-color: var(--bg-surface);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-control);
+      border-radius: 10px;
+    }
+
+    .filter-pill:hover {
+      color: var(--text-primary);
+      border-color: var(--text-primary);
+    }
+
+    .filter-pill[aria-pressed='true'] {
+      background-color: var(--accent-primary);
+      color: var(--accent-contrast);
+      border-color: var(--accent-primary);
+      font-weight: 700;
+    }
+
+    .input-field {
+      background-color: var(--bg-surface);
+      color: var(--text-primary);
+      border: 1px solid var(--border-control);
+      border-radius: 10px;
+    }
+
+    .input-field::placeholder {
+      color: var(--text-secondary);
+    }
+
+    /* R-19 & R-39: Hormati prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+
+  <!-- R-40: Gunakan defer agar tidak memblokir render awal -->
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="config.js" defer></script>
+</head>
+
+<body class="surface-canvas antialiased min-h-screen flex flex-col">
+
+  <a href="#konten-utama"
+    class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 px-4 py-2.5 text-sm font-semibold btn-primary">
+    Lewati ke isi halaman
+  </a>
+
+  <div id="setup-banner-container" class="hidden"></div>
+
+  <!-- HEADER & NAVIGASI UTAMA -->
+  <header class="sticky top-0 z-30 surface-card border-b border-structural">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[72px] flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <a href="#konten-utama"
+          class="flex items-center gap-2.5 text-main font-extrabold tracking-tight text-lg sm:text-xl">
+          <span class="w-9 h-9 rounded-[10px] flex items-center justify-center text-sm font-extrabold"
+            style="background-color: var(--accent-primary); color: var(--accent-contrast);">
+            AZ
+          </span>
+          <span>ANZA Tech</span>
+        </a>
+        <span class="hidden sm:inline-block text-sm text-muted pl-3 border-l border-structural">
+          Solusi Aplikasi Usaha &amp; IT
+        </span>
+      </div>
+
+      <!-- Navigasi Desktop -->
+      <div class="hidden md:flex items-center gap-2 lg:gap-3">
+        <nav aria-label="Navigasi Utama" class="flex items-center gap-1 lg:gap-2">
+          <a href="#layanan"
+            class="min-h-[44px] inline-flex items-center px-3 py-2 text-base font-semibold text-main hover:text-brand">
+            Layanan Kami
+          </a>
+          <a href="#konsultasi"
+            class="min-h-[44px] inline-flex items-center px-3 py-2 text-base font-medium text-muted hover:text-main">
+            Cara Pesan
+          </a>
+        </nav>
+
+        <button type="button" onclick="window.PortfolioConfig.toggleTheme()"
+          class="min-h-[44px] px-3.5 py-2 text-sm font-semibold btn-secondary transition"
+          aria-label="Ganti tampilan terang atau gelap">
+          <span data-theme-label>Tampilan Gelap</span>
+        </button>
+
+        <a href="admin.html"
+          class="min-h-[44px] px-3.5 py-2 text-sm font-semibold btn-secondary inline-flex items-center transition">
+          Kelola Data (Admin)
+        </a>
+
+        <a href="https://wa.me/6281234567890?text=Halo%20ANZA%20Tech%2C%20saya%20ingin%20bertanya%20mengenai%20pembuatan%20aplikasi%20untuk%20usaha%20saya."
+          target="_blank" rel="noopener noreferrer"
+          class="min-h-[44px] px-4 py-2 text-sm font-bold btn-primary inline-flex items-center transition shadow-sm">
+          Tanya via WhatsApp
+        </a>
+      </div>
+
+      <!-- Kontrol Navigasi Mobile -->
+      <div class="flex md:hidden items-center gap-2">
+        <button type="button" onclick="window.PortfolioConfig.toggleTheme()"
+          class="min-h-[44px] px-3 py-2 text-xs font-semibold btn-secondary"
+          aria-label="Ganti tampilan terang atau gelap">
+          <span data-theme-label>Tampilan Gelap</span>
+        </button>
+
+        <button id="mobile-menu-btn" type="button" onclick="toggleMobileMenu()" aria-expanded="false"
+          aria-controls="mobile-nav-panel" class="min-h-[44px] px-3.5 py-2 text-sm font-semibold btn-secondary">
+          Menu
+        </button>
+      </div>
+    </div>
+
+    <!-- Panel Navigasi Mobile -->
+    <nav id="mobile-nav-panel" aria-label="Navigasi Mobile"
+      class="hidden md:hidden border-t border-structural surface-card px-4 py-4 space-y-2">
+      <a href="#layanan" onclick="toggleMobileMenu(false)"
+        class="block min-h-[44px] px-3.5 py-2.5 rounded-[10px] text-base font-semibold text-main surface-subtle">
+        Layanan Kami
+      </a>
+      <a href="#konsultasi" onclick="toggleMobileMenu(false)"
+        class="block min-h-[44px] px-3.5 py-2.5 rounded-[10px] text-base font-medium text-main hover:surface-subtle">
+        Cara Pesan &amp; Konsultasi
+      </a>
+      <a href="admin.html"
+        class="block min-h-[44px] px-3.5 py-2.5 rounded-[10px] text-base font-medium text-main hover:surface-subtle">
+        Kelola Data (Admin)
+      </a>
+      <a href="https://wa.me/6281234567890?text=Halo%20ANZA%20Tech%2C%20saya%20ingin%20bertanya%20mengenai%20pembuatan%20aplikasi%20untuk%20usaha%20saya."
+        target="_blank" rel="noopener noreferrer"
+        class="block min-h-[44px] px-4 py-2.5 text-center text-sm font-bold btn-primary">
+        Tanya via WhatsApp
+      </a>
+    </nav>
+  </header>
+
+  <main id="konten-utama" class="flex-1">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10 space-y-10">
+
+      <!-- SEKSI 1: PEMBUKA YANG JELAS UNTUK PEMILIK USAHA & ORANG AWAM -->
+      <section aria-labelledby="hero-heading" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-end">
+        <div class="lg:col-span-7 space-y-3.5">
+          <p class="text-base sm:text-lg text-muted max-w-[62ch]">
+            <strong>ANZA Tech</strong> membantu pemilik pabrik, toko, HRD kantor, hingga perhotelan merapikan pembukuan
+            stok, absensi karyawan via HP, dan program kasir tanpa istilah teknis yang membingungkan.
+          </p>
+          <div class="pt-1 flex flex-wrap items-center gap-3">
+            <span
+              class="inline-flex items-center gap-2 px-3.5 py-2 rounded-[10px] text-sm font-semibold badge-status-green">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-600" aria-hidden="true"></span>
+              <span>Bisa Konsultasi Gratis &amp; Request Sesuai Kebutuhan Usaha Anda</span>
+            </span>
+          </div>
+        </div>
+
+        <!-- Kontrol Pilihan Jenis Kebutuhan & Pencarian Mudah -->
+        <div class="lg:col-span-5 flex flex-col sm:items-end gap-3.5">
+          <div class="w-full sm:text-right">
+            <p class="text-sm font-semibold text-main mb-2">
+              Pilih jenis aplikasi yang ingin Anda lihat:
+            </p>
+            <div id="category-filters" role="group" aria-label="Filter proyek berdasarkan jenis kebutuhan usaha"
+              class="flex flex-wrap sm:justify-end gap-2 w-full">
+              <button type="button" data-category="Semua" aria-pressed="true" onclick="setCategoryFilter('Semua')"
+                class="filter-pill min-h-[44px] px-3.5 py-2 text-sm font-semibold transition">
+                Semua (<span id="count-all">0</span>)
+              </button>
+              <button type="button" data-category="Web App" aria-pressed="false" onclick="setCategoryFilter('Web App')"
+                class="filter-pill min-h-[44px] px-3.5 py-2 text-sm font-medium transition">
+                Sistem Kantor &amp; Pabrik (<span id="count-webapp">0</span>)
+              </button>
+              <button type="button" data-category="Mobile & PWA" aria-pressed="false"
+                onclick="setCategoryFilter('Mobile & PWA')"
+                class="filter-pill min-h-[44px] px-3.5 py-2 text-sm font-medium transition">
+                Aplikasi HP &amp; Absensi (<span id="count-mobile">0</span>)
+              </button>
+              <button type="button" data-category="Desktop & POS" aria-pressed="false"
+                onclick="setCategoryFilter('Desktop & POS')"
+                class="filter-pill min-h-[44px] px-3.5 py-2 text-sm font-medium transition">
+                Program Kasir Toko (<span id="count-desktop">0</span>)
+              </button>
+              <button type="button" data-category="IT Infrastructure" aria-pressed="false"
+                onclick="setCategoryFilter('IT Infrastructure')"
+                class="filter-pill min-h-[44px] px-3.5 py-2 text-sm font-medium transition">
+                Jaringan &amp; Server (<span id="count-infra">0</span>)
+              </button>
+            </div>
+          </div>
+
+          <div class="w-full sm:max-w-md flex items-stretch gap-2">
+            <label for="search-input" class="sr-only">
+              Cari sistem atau aplikasi, misalnya kasir, absensi, stok gudang, atau hotel
+            </label>
+            <div class="relative flex-1">
+              <input id="search-input" type="search" autocomplete="off"
+                placeholder="Ketik kata kunci: kasir, absensi, stok gudang, hotel..."
+                class="w-full min-h-[44px] px-3.5 py-2 text-sm sm:text-base input-field transition" />
+            </div>
+            <button id="clear-search-btn" type="button" onclick="clearSearchInput()"
+              class="hidden min-h-[44px] px-4 py-2 text-sm font-semibold btn-secondary" aria-label="Hapus pencarian">
+              Hapus
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SEKSI 2: DAFTAR SOLUSI & PROYEK YANG TELAH DIBUAT -->
+      <section id="katalog" aria-label="Katalog Solusi Software &amp; IT ANZA Tech" class="space-y-6">
+        <div
+          class="flex flex-wrap items-center justify-between gap-2 text-sm text-muted border-b border-structural pb-3">
+          <span>
+            Menampilkan <strong id="visible-count" class="text-main">0</strong> dari
+            <strong id="total-count" class="text-main">0</strong> solusi &amp; proyek
+          </span>
+          <span id="data-source-text" class="text-sm text-muted">Memuat daftar aplikasi...</span>
+        </div>
+
+        <!-- STATE 1: LOADING STATE (R-27) -->
+        <div id="projects-skeleton" role="status" aria-live="polite" class="space-y-5">
+          <p class="text-sm text-muted">
+            Sedang menyiapkan katalog solusi ANZA Tech...
+          </p>
+          <div class="surface-card border border-structural rounded-2xl p-6 h-64"></div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="surface-card border border-structural rounded-2xl p-5 h-56"></div>
+            <div class="surface-card border border-structural rounded-2xl p-5 h-56"></div>
+            <div class="surface-card border border-structural rounded-2xl p-5 h-56"></div>
+          </div>
+        </div>
+
+        <!-- STATE 2: ERROR STATE (R-27) -->
+        <div id="projects-error" role="alert" class="hidden surface-card border p-6 rounded-2xl max-w-2xl"
+          style="border-color: var(--danger-border);">
+          <h2 class="text-main">
+            Daftar aplikasi belum berhasil dimuat dari server
+          </h2>
+          <p id="projects-error-message" class="text-base text-muted mt-2 leading-relaxed"></p>
+          <div class="mt-4 flex flex-wrap gap-3">
+            <button type="button" onclick="loadProjects()"
+              class="min-h-[44px] px-4 py-2 text-sm font-semibold btn-primary">
+              Coba Muat Ulang
+            </button>
+            <button type="button" onclick="useFallbackCatalog()"
+              class="min-h-[44px] px-4 py-2 text-sm font-semibold btn-secondary">
+              Tampilkan Contoh Katalog Bawaan
+            </button>
+          </div>
+        </div>
+
+        <!-- STATE 3: EMPTY STATE (R-27) -->
+        <div id="projects-empty"
+          class="hidden surface-card border border-structural p-8 sm:p-12 rounded-2xl text-center max-w-xl mx-auto">
+          <h2 class="text-main">
+            Belum ada aplikasi yang cocok dengan kata pencarian tersebut
+          </h2>
+          <p class="text-base text-muted mt-2">
+            Silakan coba kata lain seperti "kasir", "stok", "absensi", atau klik tombol di bawah untuk melihat semua
+            solusi &amp; proyek.
+          </p>
+          <button type="button" onclick="resetAllFilters()"
+            class="mt-5 min-h-[44px] px-5 py-2.5 text-sm font-bold btn-primary">
+            Tampilkan Semua Aplikasi
+          </button>
+        </div>
+
+        <!-- CONTAINER UTAMA: KARTU SOROTAN + GRID 3 KOLOM -->
+        <div id="projects-grid" class="hidden space-y-6"></div>
+      </section>
+
+      <!-- SEKSI 3: PENJELASAN LAYANAN & CARA PEMESANAN MUDAH (TANPA NESTED CARDS) -->
+      <section id="layanan" aria-labelledby="layanan-heading"
+        class="pt-8 border-t border-structural grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-7 surface-card border border-structural rounded-2xl p-6 sm:p-8 space-y-5">
+          <div>
+            <h2 id="layanan-heading" class="text-main">
+              Apa Saja yang Bisa Dibantu oleh ANZA Tech?
+            </h2>
+            <p class="text-base text-muted mt-1.5">
+              Anda tidak perlu paham bahasa pemrograman. Cukup ceritakan alur kerja di tempat usaha Anda, dan kami
+              siapkan sistem yang mudah dijalankan oleh karyawan Anda.
+            </p>
+          </div>
+
+          <div class="divide-y border-t border-structural">
+            <div class="py-4 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+              <h3 class="text-base sm:text-lg font-bold text-main">
+                1. Sistem Pembukuan &amp; Stok Gudang Pabrik / Grosir
+              </h3>
+              <p class="text-sm sm:text-base text-muted sm:max-w-md">
+                Mencatat barang masuk-keluar di banyak gudang, jadwal produksi, hingga laporan laba-rugi otomatis.
+              </p>
+            </div>
+
+            <div class="py-4 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+              <h3 class="text-base sm:text-lg font-bold text-main">
+                2. Aplikasi Absensi HP &amp; Hitung Gaji Karyawan
+              </h3>
+              <p class="text-sm sm:text-base text-muted sm:max-w-md">
+                Absen cukup lewat HP dengan foto selfie dan lokasi GPS, langsung terhubung ke hitungan lembur dan slip
+                gaji.
+              </p>
+            </div>
+
+            <div class="py-4 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+              <h3 class="text-base sm:text-lg font-bold text-main">
+                3. Program Kasir Toko, Minimarket &amp; Restoran
+              </h3>
+              <p class="text-sm sm:text-base text-muted sm:max-w-md">
+                Kasir tetap bisa transaksi dan cetak struk meski internet mati, lalu laporan terkumpul ke HP pemilik.
+              </p>
+            </div>
+
+            <div class="pt-4 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+              <h3 class="text-base sm:text-lg font-bold text-main">
+                4. Penataan Wi-Fi Kantor, Hotel &amp; Server Data
+              </h3>
+              <p class="text-sm sm:text-base text-muted sm:max-w-md">
+                Memisahkan jalur Wi-Fi tamu dan komputer kerja agar stabil, aman, dan memiliki cadangan data otomatis.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div id="konsultasi"
+          class="lg:col-span-5 surface-card border border-structural rounded-2xl p-6 sm:p-8 space-y-5">
+          <div>
+            <h2 class="text-main">
+              Cara Diskusi &amp; Pemesanan
+            </h2>
+            <p class="text-base text-muted mt-1.5 leading-relaxed">
+              Ingin tanya-tanya dulu atau melihat demo aplikasinya? Ikuti 3 langkah sederhana berikut:
+            </p>
+          </div>
+
+          <ol class="divide-y border-t border-b border-structural text-sm sm:text-base">
+            <li class="py-3.5">
+              <strong class="text-main block">Langkah 1: Ceritakan Kebutuhan Usaha Anda</strong>
+              <span class="text-muted">Hubungi kami lewat WhatsApp dan ceritakan kendala pencatatan atau aplikasi yang
+                sedang Anda cari.</span>
+            </li>
+            <li class="py-3.5">
+              <strong class="text-main block">Langkah 2: Lihat Contoh Layar &amp; Rincian Biaya</strong>
+              <span class="text-muted">Kami tunjukkan contoh tampilan aplikasinya beserta estimasi waktu pengerjaan dan
+                biaya yang transparan.</span>
+            </li>
+            <li class="py-3.5">
+              <strong class="text-main block">Langkah 3: Pemasangan &amp; Latihan Pakai Sampai Bisa</strong>
+              <span class="text-muted">Aplikasi kami pasangkan dan staf Anda kami pandu cara pemakaiannya sampai
+                benar-benar lancar.</span>
+            </li>
+          </ol>
+
+          <div class="flex flex-wrap items-center gap-3 pt-1">
+            <a href="https://wa.me/6281234567890?text=Halo%20ANZA%20Tech%2C%20saya%20ingin%20konsultasi%20mengenai%20pembuatan%20aplikasi%20usaha."
+              target="_blank" rel="noopener noreferrer"
+              class="min-h-[46px] px-5 py-2.5 text-sm sm:text-base font-bold btn-primary inline-flex items-center justify-center transition">
+              Chat WhatsApp Sekarang
+            </a>
+            <a href="mailto:halo@anzatech.id?subject=Konsultasi%20Aplikasi%20Usaha%20-%20ANZA%20Tech"
+              class="min-h-[46px] px-4 py-2.5 text-sm sm:text-base font-semibold btn-secondary inline-flex items-center justify-center transition">
+              Kirim Email
+            </a>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-structural surface-card py-6 text-sm text-muted mt-10">
+    <div
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+      <div>
+        <span>&copy; <span id="current-year"></span> <strong>ANZA Tech</strong>. Jasa Pembuatan Aplikasi Usaha, Kasir
+          &amp; Solusi IT.</span>
+      </div>
+      <div class="flex flex-wrap items-center gap-4">
+        <a href="#layanan" class="min-h-[44px] inline-flex items-center hover:text-main">Layanan Kami</a>
+        <a href="admin.html" class="min-h-[44px] inline-flex items-center font-semibold text-brand hover:underline">
+          Halaman Admin
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- MODAL POPUP DETAIL PROYEK & GALERI GAMBAR -->
+  <div id="project-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4 sm:p-6 overflow-y-auto"
+    style="background-color: rgba(15, 23, 42, 0.78);" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div
+      class="relative z-10 w-full max-w-3xl surface-card border border-interactive rounded-2xl my-8 max-h-[90vh] flex flex-col shadow-xl overflow-hidden">
+
+      <!-- Header Modal -->
+      <div class="flex items-center justify-between gap-3 px-6 py-4 border-b border-structural">
+        <div id="modal-badges" class="flex flex-wrap items-center gap-2"></div>
+        <button id="modal-close-btn" type="button" onclick="closeProjectModal()"
+          class="min-h-[44px] px-4 py-2 text-sm font-semibold btn-secondary" aria-label="Tutup jendela detail aplikasi">
+          Tutup
+        </button>
+      </div>
+
+      <!-- Isi Modal -->
+      <div class="overflow-y-auto p-6 sm:p-8 space-y-6">
+        <div class="space-y-3">
+          <div id="modal-image-stage"
+            class="relative border border-structural surface-subtle rounded-xl aspect-video overflow-hidden select-none"
+            style="touch-action: pan-y; cursor: grab;">
+            <img id="modal-image"
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 675'%3E%3C/svg%3E"
+              alt="Pratinjau gambar tampilan aplikasi" width="1200" height="675" draggable="false"
+              class="w-full h-full object-cover pointer-events-none transition-transform duration-150 ease-out"
+              onerror="this.onerror=null;this.src=window.PortfolioConfig.DEFAULT_PROJECT_IMAGE;" />
+
+            <!-- Kontrol Navigasi Galeri Panah Kiri/Kanan -->
+            <div id="modal-gallery-controls" class="hidden">
+              <button id="modal-prev-btn" type="button" onclick="stepModalSlide(-1)"
+                class="absolute left-2.5 sm:left-3.5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center btn-secondary shadow-md"
+                aria-label="Gambar sebelumnya" title="Gambar sebelumnya">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"
+                  aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"></path>
+                </svg>
+              </button>
+
+              <button id="modal-next-btn" type="button" onclick="stepModalSlide(1)"
+                class="absolute right-2.5 sm:right-3.5 top-1/2 -translate-y-1/2 z-10 w-11 h-11 min-w-[44px] min-h-[44px] rounded-full flex items-center justify-center btn-secondary shadow-md"
+                aria-label="Gambar berikutnya" title="Gambar berikutnya">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.4" viewBox="0 0 24 24"
+                  aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"></path>
+                </svg>
+              </button>
+
+              <span id="modal-slide-counter"
+                class="absolute bottom-2.5 left-1/2 -translate-x-1/2 z-10 px-2.5 py-0.5 rounded-full text-xs font-semibold surface-card border border-interactive text-main shadow pointer-events-none">
+                1 / 1
+              </span>
+            </div>
+          </div>
+
+          <!-- Baris Thumbnail Galeri Screenshot -->
+          <div id="modal-gallery-thumbs" role="group" aria-label="Pilihan gambar tampilan aplikasi"
+            class="hidden grid-cols-3 sm:grid-cols-4 gap-2.5"></div>
+        </div>
+
+        <div>
+          <h3 id="modal-title" class="text-xl sm:text-2xl font-bold text-main"></h3>
+          <p id="modal-date" class="text-sm text-muted mt-1"></p>
+        </div>
+
+        <div class="pt-4 border-t border-structural">
+          <h4 class="text-sm font-bold text-brand uppercase mb-2">
+            Penjelasan Singkat &amp; Kegunaan untuk Usaha Anda
+          </h4>
+          <p id="modal-description" class="text-main text-base leading-relaxed whitespace-pre-line"></p>
+        </div>
+
+        <div class="pt-4 border-t border-structural">
+          <h4 class="text-sm font-bold text-muted uppercase mb-2.5">
+            Fitur &amp; Perangkat yang Didukung
+          </h4>
+          <div id="modal-tech-stack" class="flex flex-wrap gap-2"></div>
+        </div>
+      </div>
+
+      <!-- Footer Aksi Modal -->
+      <div
+        class="px-6 py-4 border-t border-structural surface-subtle flex flex-wrap items-center justify-between gap-3">
+        <div id="modal-action-links" class="flex flex-wrap items-center gap-2.5"></div>
+        <button type="button" onclick="closeProjectModal()"
+          class="min-h-[44px] px-4 py-2 text-sm font-semibold btn-secondary">
+          Tutup Jendela
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT LOGIKA HALAMAN PUBLIK -->
+  <script>
+    let allProjects = [];
+    let activeCategory = 'Semua';
+    let searchQuery = '';
+    let lastFocusedElement = null;
+    let activeModalImages = [];
+    let activeModalSlideIndex = 0;
+    let activeModalTitle = '';
+
+    const LOCAL_STORAGE_KEY = 'anza_tech_projects_v12';
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function normalizeTechStack(rawStack) {
+      if (!rawStack) return [];
+      if (Array.isArray(rawStack)) {
+        return rawStack.map((item) => String(item).trim()).filter(Boolean);
+      }
+      if (typeof rawStack === 'string') {
+        return rawStack
+          .split(',')
+          .map((item) => item.trim())
+          .filter(Boolean);
+      }
+      return [];
+    }
+
+    function getProjectImagesList(project) {
+      if (
+        window.PortfolioConfig &&
+        typeof window.PortfolioConfig.normalizeProjectImages === 'function'
+      ) {
+        const list = window.PortfolioConfig.normalizeProjectImages(project);
+        if (list.length > 0) return list;
+      }
+      if (project && typeof project.image_url === 'string' && project.image_url.trim() !== '') {
+        return [project.image_url.trim()];
+      }
+      return [window.PortfolioConfig.DEFAULT_PROJECT_IMAGE];
+    }
+
+    function getFriendlyCategory(category) {
+      if (
+        window.PortfolioConfig &&
+        typeof window.PortfolioConfig.getFriendlyCategoryLabel === 'function'
+      ) {
+        return window.PortfolioConfig.getFriendlyCategoryLabel(category);
+      }
+      return category || 'Aplikasi Usaha';
+    }
+
+    function formatIndonesianDate(dateStr) {
+      if (!dateStr) return 'Tersedia untuk Diterapkan pada Usaha Anda';
+      const date = new Date(dateStr);
+      if (Number.isNaN(date.getTime())) return 'Tersedia untuk Diterapkan pada Usaha Anda';
+      return (
+        'Diperbarui: ' +
+        date.toLocaleDateString('id-ID', {
+          month: 'long',
+          year: 'numeric'
+        })
+      );
+    }
+
+    function toggleMobileMenu(forceState) {
+      const panel = document.getElementById('mobile-nav-panel');
+      const btn = document.getElementById('mobile-menu-btn');
+      if (!panel || !btn) return;
+
+      const isCurrentlyHidden = panel.classList.contains('hidden');
+      const nextOpen = typeof forceState === 'boolean' ? forceState : isCurrentlyHidden;
+
+      panel.classList.toggle('hidden', !nextOpen);
+      btn.setAttribute('aria-expanded', nextOpen ? 'true' : 'false');
+      btn.textContent = nextOpen ? 'Tutup' : 'Menu';
+    }
+
+    function getLocalFallbackProjects() {
+      try {
+        const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (stored) {
+          const parsed = JSON.parse(stored);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            return parsed;
+          }
+        }
+      } catch (err) {
+        console.warn('Gagal membaca storage lokal:', err);
+      }
+      return [...window.PortfolioConfig.FALLBACK_PROJECTS];
+    }
+
+    function updateCategoryCounts() {
+      const counts = {
+        all: allProjects.length,
+        webapp: allProjects.filter((p) => p.category === 'Web App').length,
+        mobile: allProjects.filter((p) => p.category === 'Mobile & PWA').length,
+        desktop: allProjects.filter((p) => p.category === 'Desktop & POS').length,
+        infra: allProjects.filter((p) => p.category === 'IT Infrastructure').length
+      };
+
+      const setCount = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = val;
+      };
+
+      setCount('count-all', counts.all);
+      setCount('count-webapp', counts.webapp);
+      setCount('count-mobile', counts.mobile);
+      setCount('count-desktop', counts.desktop);
+      setCount('count-infra', counts.infra);
+    }
+
+    function getFilteredProjects() {
+      const query = searchQuery.trim().toLowerCase();
+
+      return allProjects.filter((project) => {
+        const matchCategory =
+          activeCategory === 'Semua' || project.category === activeCategory;
+
+        if (!matchCategory) return false;
+        if (!query) return true;
+
+        const titleMatch = (project.title || '').toLowerCase().includes(query);
+        const descMatch = (project.description || '').toLowerCase().includes(query);
+        const catMatch = (project.category || '').toLowerCase().includes(query);
+        const friendlyCatMatch = getFriendlyCategory(project.category)
+          .toLowerCase()
+          .includes(query);
+        const stackMatch = normalizeTechStack(project.tech_stack).some((tech) =>
+          tech.toLowerCase().includes(query)
+        );
+
+        return titleMatch || descMatch || catMatch || friendlyCatMatch || stackMatch;
+      });
+    }
+
+    function renderProjects() {
+      const gridEl = document.getElementById('projects-grid');
+      const emptyEl = document.getElementById('projects-empty');
+      const visibleCountEl = document.getElementById('visible-count');
+      const totalCountEl = document.getElementById('total-count');
+
+      const filtered = getFilteredProjects();
+
+      if (visibleCountEl) visibleCountEl.textContent = filtered.length;
+      if (totalCountEl) totalCountEl.textContent = allProjects.length;
+
+      if (filtered.length === 0) {
+        gridEl.classList.add('hidden');
+        gridEl.innerHTML = '';
+        emptyEl.classList.remove('hidden');
+        return;
+      }
+
+      emptyEl.classList.add('hidden');
+      gridEl.classList.remove('hidden');
+
+      const fallbackImg = window.PortfolioConfig.DEFAULT_PROJECT_IMAGE;
+      const firstProject = filtered[0];
+      const remainingProjects = filtered.slice(1);
+
+      const firstGallery = getProjectImagesList(firstProject);
+      const firstImage = firstGallery[0] || fallbackImg;
+      const firstStack = normalizeTechStack(firstProject.tech_stack);
+      const firstFriendlyCat = getFriendlyCategory(firstProject.category);
+
+      const hasFirstDemo =
+        firstProject.demo_url &&
+        firstProject.demo_url.trim() !== '' &&
+        firstProject.demo_url.trim() !== '#';
+
+      const spotlightHtml = `
+        <article class="surface-card border border-structural rounded-2xl p-5 sm:p-7 shadow-sm grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <div class="lg:col-span-7 relative rounded-xl overflow-hidden border border-structural aspect-video surface-subtle">
+            <img
+              src="${escapeHtml(firstImage)}"
+              alt="Gambar tampilan ${escapeHtml(firstProject.title)}"
+              width="1200"
+              height="675"
+              fetchpriority="high"
+              onerror="this.onerror=null;this.src='${escapeHtml(fallbackImg)}';"
+              class="w-full h-full object-cover"
+            />
+          </div>
+
+          <div class="lg:col-span-5 flex flex-col justify-between gap-5">
+            <div class="space-y-3">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-2.5 py-1 rounded-md text-xs font-bold badge-blue">
+                  ${escapeHtml(firstFriendlyCat)}
+                </span>
+              </div>
+
+              <h2 class="text-main">
+                <button
+                  type="button"
+                  onclick="openProjectModal('${escapeHtml(firstProject.id)}')"
+                  class="text-left hover:text-brand transition"
+                >
+                  ${escapeHtml(firstProject.title)}
+                </button>
+              </h2>
+
+              <p class="text-base text-muted leading-relaxed">
+                ${escapeHtml(firstProject.description)}
+              </p>
+            </div>
+
+            <div class="space-y-4">
+              <div class="flex flex-wrap gap-1.5">
+                ${firstStack
+          .map(
+            (tech) => `
+                  <span class="px-2.5 py-1 rounded-md text-xs font-semibold surface-subtle text-main border border-structural">
+                    ${escapeHtml(tech)}
+                  </span>
+                `
+          )
+          .join('')}
+              </div>
+
+              <div class="flex flex-wrap items-center gap-2.5 pt-3 border-t border-structural">
+                <button
+                  type="button"
+                  onclick="openProjectModal('${escapeHtml(firstProject.id)}')"
+                  class="min-h-[44px] px-4 py-2.5 text-sm font-bold btn-primary transition"
+                >
+                  Lihat Penjelasan &amp; Gambar (${firstGallery.length})
+                </button>
+                ${hasFirstDemo
+          ? `
+                  <a
+                    href="${escapeHtml(firstProject.demo_url)}"
+                    target="${firstProject.demo_url.startsWith('#') ? '_self' : '_blank'}"
+                    rel="noopener noreferrer"
+                    class="min-h-[44px] px-3.5 py-2.5 text-sm font-semibold btn-secondary inline-flex items-center transition"
+                  >
+                    Coba Simulasi
+                  </a>
+                `
+          : ''
+        }
+              </div>
+            </div>
+          </div>
+        </article>
+      `;
+
+      const secondaryGridHtml =
+        remainingProjects.length > 0
+          ? `
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          ${remainingProjects
+            .map((project) => {
+              const stack = normalizeTechStack(project.tech_stack);
+              const visibleStack = stack.slice(0, 3);
+              const extraCount = stack.length - visibleStack.length;
+              const gallery = getProjectImagesList(project);
+              const coverImg = gallery[0] || fallbackImg;
+              const friendlyCat = getFriendlyCategory(project.category);
+
+              return `
+                <article class="surface-card border border-structural rounded-2xl p-5 flex flex-col justify-between gap-4 shadow-sm">
+                  <div class="space-y-3.5">
+                    <div class="relative rounded-xl overflow-hidden border border-structural aspect-video surface-subtle">
+                      <img
+                        src="${escapeHtml(coverImg)}"
+                        alt="Gambar tampilan ${escapeHtml(project.title)}"
+                        width="640"
+                        height="360"
+                        loading="lazy"
+                        onerror="this.onerror=null;this.src='${escapeHtml(fallbackImg)}';"
+                        class="w-full h-full object-cover"
+                      />
+                      ${gallery.length > 1
+                  ? `<span class="absolute bottom-2.5 right-2.5 px-2.5 py-0.5 rounded-md text-xs font-semibold surface-card border border-interactive text-main shadow">${gallery.length} Gambar</span>`
+                  : ''
+                }
+                    </div>
+
+                    <div class="flex items-center justify-between gap-2 text-xs sm:text-sm">
+                      <span class="font-bold text-brand">
+                        ${escapeHtml(friendlyCat)}
+                      </span>
+                      ${project.is_featured
+                  ? `<span class="px-2 py-0.5 rounded text-xs font-bold badge-featured">Unggulan</span>`
+                  : `<span class="text-muted text-xs">Solusi Siap Pakai</span>`
+                }
+                    </div>
+
+                    <h3 class="text-main">
+                      <button
+                        type="button"
+                        onclick="openProjectModal('${escapeHtml(project.id)}')"
+                        class="text-left hover:text-brand transition"
+                      >
+                        ${escapeHtml(project.title)}
+                      </button>
+                    </h3>
+
+                    <p class="text-sm sm:text-base text-muted leading-relaxed">
+                      ${escapeHtml(project.description)}
+                    </p>
+                  </div>
+
+                  <div class="pt-3.5 border-t border-structural space-y-3">
+                    <div class="flex flex-wrap gap-1.5">
+                      ${visibleStack
+                  .map(
+                    (tech) => `
+                        <span class="px-2.5 py-0.5 rounded-md text-xs font-medium surface-subtle text-main border border-structural">
+                          ${escapeHtml(tech)}
+                        </span>
+                      `
+                  )
+                  .join('')}
+                      ${extraCount > 0
+                  ? `<span class="px-2 py-0.5 rounded-md text-xs font-medium surface-subtle text-muted border border-structural">+${extraCount}</span>`
+                  : ''
+                }
+                    </div>
+
+                    <button
+                      type="button"
+                      onclick="openProjectModal('${escapeHtml(project.id)}')"
+                      class="w-full min-h-[44px] px-4 py-2 text-sm font-bold btn-secondary transition text-center"
+                    >
+                      Lihat Penjelasan &amp; Gambar &rarr;
+                    </button>
+                  </div>
+                </article>
+              `;
+            })
+            .join('')}
+        </div>
+      `
+          : '';
+
+      gridEl.innerHTML = spotlightHtml + secondaryGridHtml;
+    }
+
+    function setCategoryFilter(category) {
+      activeCategory = category;
+
+      const buttons = document.querySelectorAll('#category-filters .filter-pill');
+      buttons.forEach((btn) => {
+        const isSelected = btn.getAttribute('data-category') === category;
+        btn.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+      });
+
+      renderProjects();
+    }
+
+    function clearSearchInput() {
+      const searchInput = document.getElementById('search-input');
+      const clearBtn = document.getElementById('clear-search-btn');
+      if (searchInput) {
+        searchInput.value = '';
+        searchQuery = '';
+      }
+      if (clearBtn) {
+        clearBtn.classList.add('hidden');
+      }
+      renderProjects();
+    }
+
+    function resetAllFilters() {
+      clearSearchInput();
+      setCategoryFilter('Semua');
+    }
+
+    function setModalSlide(index) {
+      if (!activeModalImages || activeModalImages.length === 0) return;
+
+      const total = activeModalImages.length;
+      const safeIndex = ((index % total) + total) % total;
+      activeModalSlideIndex = safeIndex;
+
+      const imgEl = document.getElementById('modal-image');
+      const counterEl = document.getElementById('modal-slide-counter');
+      const controlsEl = document.getElementById('modal-gallery-controls');
+      const thumbsEl = document.getElementById('modal-gallery-thumbs');
+
+      if (imgEl) {
+        imgEl.style.transform = '';
+        imgEl.src = activeModalImages[safeIndex];
+        imgEl.alt = `Gambar tampilan ${safeIndex + 1} dari ${total}: ${activeModalTitle}`;
+      }
+
+      if (counterEl) {
+        counterEl.textContent = `${safeIndex + 1} / ${total}`;
+      }
+
+      if (controlsEl) {
+        controlsEl.classList.toggle('hidden', total <= 1);
+      }
+
+      if (thumbsEl) {
+        if (total <= 1) {
+          thumbsEl.classList.add('hidden');
+          thumbsEl.classList.remove('grid');
+          thumbsEl.innerHTML = '';
+        } else {
+          thumbsEl.classList.remove('hidden');
+          thumbsEl.classList.add('grid');
+          thumbsEl.innerHTML = activeModalImages
+            .map((url, idx) => {
+              const isActive = idx === safeIndex;
+              return `
+                <button
+                  type="button"
+                  onclick="setModalSlide(${idx})"
+                  aria-label="Pilih gambar ${idx + 1}"
+                  aria-pressed="${isActive ? 'true' : 'false'}"
+                  class="relative rounded-lg overflow-hidden border aspect-video transition ${isActive
+                  ? 'border-blue-600 ring-2 ring-blue-600'
+                  : 'border-structural opacity-75 hover:opacity-100'
+                }"
+                >
+                  <img
+                    src="${escapeHtml(url)}"
+                    alt="Thumbnail ${idx + 1}"
+                    width="320"
+                    height="180"
+                    class="w-full h-full object-cover"
+                    onerror="this.onerror=null;this.src=window.PortfolioConfig.DEFAULT_PROJECT_IMAGE;"
+                  />
+                  <span class="absolute bottom-1 right-1 px-1.5 py-0.5 rounded text-[11px] font-semibold surface-card border border-structural text-main">
+                    Gambar ${idx + 1}
+                  </span>
+                </button>
+              `;
+            })
+            .join('');
+        }
+      }
+    }
+
+    function stepModalSlide(delta) {
+      if (!activeModalImages || activeModalImages.length <= 1) return;
+      setModalSlide(activeModalSlideIndex + delta);
+    }
+
+    function openProjectModal(projectId) {
+      const project = allProjects.find((p) => String(p.id) === String(projectId));
+      if (!project) return;
+
+      lastFocusedElement = document.activeElement;
+
+      const modal = document.getElementById('project-modal');
+      const titleEl = document.getElementById('modal-title');
+      const dateEl = document.getElementById('modal-date');
+      const descEl = document.getElementById('modal-description');
+      const badgesEl = document.getElementById('modal-badges');
+      const stackEl = document.getElementById('modal-tech-stack');
+      const actionsEl = document.getElementById('modal-action-links');
+
+      activeModalTitle = project.title || 'Detail Aplikasi';
+      activeModalImages = getProjectImagesList(project);
+      setModalSlide(0);
+
+      titleEl.textContent = project.title;
+      dateEl.textContent = formatIndonesianDate(project.created_at);
+      descEl.textContent = project.description;
+
+      const friendlyCat = getFriendlyCategory(project.category);
+      badgesEl.innerHTML = `
+        <span class="px-3 py-1 rounded-md text-xs sm:text-sm font-bold badge-blue">
+          ${escapeHtml(friendlyCat)}
+        </span>
+      `;
+
+      const stack = normalizeTechStack(project.tech_stack);
+      stackEl.innerHTML = stack
+        .map(
+          (tech) => `
+          <span class="px-3 py-1.5 rounded-md text-xs sm:text-sm font-semibold surface-subtle text-main border border-structural">
+            ${escapeHtml(tech)}
+          </span>
+        `
+        )
+        .join('');
+
+      const waText = encodeURIComponent(
+        `Halo ANZA Tech, saya tertarik dengan aplikasi "${project.title}" dan ingin bertanya lebih lanjut untuk usaha saya.`
+      );
+
+      actionsEl.innerHTML = `
+        <a
+          href="https://wa.me/6281234567890?text=${waText}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="min-h-[44px] px-4 py-2 text-sm font-bold btn-primary inline-flex items-center"
+        >
+          Tanyakan Aplikasi Ini via WhatsApp
+        </a>
+      `;
+
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+
+      const closeBtn = document.getElementById('modal-close-btn');
+      if (closeBtn) closeBtn.focus();
+    }
+
+    function closeProjectModal() {
+      const modal = document.getElementById('project-modal');
+      if (!modal || modal.classList.contains('hidden')) return;
+
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+
+      if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+        lastFocusedElement.focus();
+      }
+    }
+
+    function useFallbackCatalog() {
+      const skeletonEl = document.getElementById('projects-skeleton');
+      const errorEl = document.getElementById('projects-error');
+      const sourceTextEl = document.getElementById('data-source-text');
+
+      skeletonEl.classList.add('hidden');
+      errorEl.classList.add('hidden');
+
+      allProjects = getLocalFallbackProjects();
+      if (sourceTextEl) {
+        sourceTextEl.textContent = 'Katalog Aplikasi ANZA Tech';
+      }
+
+      updateCategoryCounts();
+      renderProjects();
+    }
+
+    async function loadProjects() {
+      const skeletonEl = document.getElementById('projects-skeleton');
+      const errorEl = document.getElementById('projects-error');
+      const errorMsgEl = document.getElementById('projects-error-message');
+      const gridEl = document.getElementById('projects-grid');
+      const emptyEl = document.getElementById('projects-empty');
+      const sourceTextEl = document.getElementById('data-source-text');
+
+      skeletonEl.classList.remove('hidden');
+      errorEl.classList.add('hidden');
+      gridEl.classList.add('hidden');
+      emptyEl.classList.add('hidden');
+
+      const { isSupabaseConfigured, supabaseClient } = window.PortfolioConfig;
+
+      if (!isSupabaseConfigured() || !supabaseClient) {
+        allProjects = getLocalFallbackProjects();
+        skeletonEl.classList.add('hidden');
+        if (sourceTextEl) {
+          sourceTextEl.textContent = 'Katalog Aplikasi ANZA Tech';
+        }
+        updateCategoryCounts();
+        renderProjects();
+        return;
+      }
+
+      try {
+        const { data, error } = await supabaseClient
+          .from('projects')
+          .select('*')
+          .order('is_featured', { ascending: false })
+          .order('created_at', { ascending: false });
+
+        if (error) {
+          throw error;
+        }
+
+        allProjects = Array.isArray(data) ? data : [];
+        skeletonEl.classList.add('hidden');
+
+        if (sourceTextEl) {
+          sourceTextEl.textContent = 'Terhubung ke Database ANZA Tech';
+        }
+
+        updateCategoryCounts();
+        renderProjects();
+      } catch (err) {
+        console.error('Gagal mengambil proyek dari Supabase:', err);
+        skeletonEl.classList.add('hidden');
+        errorEl.classList.remove('hidden');
+        errorMsgEl.textContent =
+          err?.message ||
+          'Koneksi ke server database belum berhasil. Anda tetap dapat melihat contoh katalog bawaan ANZA Tech.';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const initialTheme = window.PortfolioConfig.getSavedTheme();
+      window.PortfolioConfig.applyTheme(initialTheme);
+
+      const yearEl = document.getElementById('current-year');
+      if (yearEl) {
+        yearEl.textContent = new Date().getFullYear();
+      }
+
+      window.PortfolioConfig.renderSetupBanner('setup-banner-container');
+
+      const searchInput = document.getElementById('search-input');
+      const clearBtn = document.getElementById('clear-search-btn');
+
+      if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+          searchQuery = e.target.value || '';
+          if (clearBtn) {
+            clearBtn.classList.toggle('hidden', searchQuery.trim().length === 0);
+          }
+          renderProjects();
+        });
+      }
+
+      const modalEl = document.getElementById('project-modal');
+      if (modalEl) {
+        modalEl.addEventListener('click', (e) => {
+          if (e.target === modalEl) {
+            closeProjectModal();
+          }
+        });
+      }
+
+      const imageStageEl = document.getElementById('modal-image-stage');
+      const modalImgEl = document.getElementById('modal-image');
+      if (imageStageEl) {
+        let swipeStartX = 0;
+        let swipeStartY = 0;
+        let swipeCurrentX = 0;
+        let isDragging = false;
+        const SWIPE_THRESHOLD = 40;
+
+        const finishSwipe = (endX, endY) => {
+          if (!isDragging) return;
+          isDragging = false;
+          imageStageEl.style.cursor = 'grab';
+          if (modalImgEl) {
+            modalImgEl.style.transform = '';
+          }
+          if (!activeModalImages || activeModalImages.length <= 1) return;
+
+          const diffX = endX - swipeStartX;
+          const diffY = endY - swipeStartY;
+
+          if (Math.abs(diffX) >= SWIPE_THRESHOLD && Math.abs(diffX) > Math.abs(diffY)) {
+            if (diffX < 0) {
+              stepModalSlide(1);
+            } else {
+              stepModalSlide(-1);
+            }
+          }
+        };
+
+        imageStageEl.addEventListener(
+          'touchstart',
+          (e) => {
+            if (e.target.closest('button')) return;
+            if (!e.touches || e.touches.length !== 1) return;
+            swipeStartX = e.touches[0].clientX;
+            swipeStartY = e.touches[0].clientY;
+            swipeCurrentX = swipeStartX;
+            isDragging = true;
+          },
+          { passive: true }
+        );
+
+        imageStageEl.addEventListener(
+          'touchmove',
+          (e) => {
+            if (!isDragging || !e.touches || e.touches.length !== 1) return;
+            swipeCurrentX = e.touches[0].clientX;
+            const dx = swipeCurrentX - swipeStartX;
+            if (modalImgEl && activeModalImages.length > 1 && Math.abs(dx) > 6) {
+              modalImgEl.style.transform = `translateX(${Math.max(-60, Math.min(60, dx * 0.35))}px)`;
+            }
+          },
+          { passive: true }
+        );
+
+        imageStageEl.addEventListener('touchend', (e) => {
+          if (!isDragging) return;
+          const touch = (e.changedTouches && e.changedTouches[0]) || {
+            clientX: swipeCurrentX,
+            clientY: swipeStartY
+          };
+          finishSwipe(touch.clientX, touch.clientY);
+        });
+
+        imageStageEl.addEventListener('mousedown', (e) => {
+          if (e.button !== 0 || e.target.closest('button')) return;
+          swipeStartX = e.clientX;
+          swipeStartY = e.clientY;
+          swipeCurrentX = swipeStartX;
+          isDragging = true;
+          imageStageEl.style.cursor = 'grabbing';
+        });
+
+        imageStageEl.addEventListener('mousemove', (e) => {
+          if (!isDragging) return;
+          swipeCurrentX = e.clientX;
+          const dx = swipeCurrentX - swipeStartX;
+          if (modalImgEl && activeModalImages.length > 1 && Math.abs(dx) > 6) {
+            modalImgEl.style.transform = `translateX(${Math.max(-60, Math.min(60, dx * 0.35))}px)`;
+          }
+        });
+
+        imageStageEl.addEventListener('mouseup', (e) => {
+          finishSwipe(e.clientX, e.clientY);
+        });
+
+        imageStageEl.addEventListener('mouseleave', (e) => {
+          if (isDragging) {
+            finishSwipe(e.clientX, e.clientY);
+          }
+        });
+      }
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeProjectModal();
+        }
+        if (modalEl && !modalEl.classList.contains('hidden') && activeModalImages.length > 1) {
+          if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            stepModalSlide(-1);
+          } else if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            stepModalSlide(1);
+          }
+        }
+      });
+
+      loadProjects();
+    });
+  </script>
+</body>
+
+</html>

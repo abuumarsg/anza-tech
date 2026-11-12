@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html lang="id" class="light scroll-smooth" data-theme="light">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Halaman Admin: ANZA Tech</title>
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231D4ED8'/%3E%3Ctext x='32' y='41' text-anchor='middle' fill='%23FFFFFF' font-family='sans-serif' font-size='26' font-weight='800'%3EAZ%3C/text%3E%3C/svg%3E" />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Source+Sans+3:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Source Sans 3"', 'system-ui', 'sans-serif'],
+            sans: ['"Source Sans 3"', 'system-ui', 'sans-serif'],
+            mono: ['"IBM Plex Mono"', 'monospace']
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    :root,
+    html[data-theme='light'] {
+      --bg-canvas: #F8FAFC;
+      --bg-surface: #FFFFFF;
+      --bg-elevated: #F1F5F9;
+      --text-primary: #0F172A;
+      --text-secondary: #334155;
+      --border-hairline: #CBD5E1;
+      --border-control: #64748B;
+      --accent-primary: #1D4ED8;
+      --accent-contrast: #FFFFFF;
+      --accent-secondary: #B45309;
+      --status-ok: #047857;
+      --danger-text: #991B1B;
+      --danger-border: #B91C1C;
+    }
+
+    html[data-theme='dark'] {
+      --bg-canvas: #090D16;
+      --bg-surface: #111827;
+      --bg-elevated: #1E293B;
+      --text-primary: #F8FAFC;
+      --text-secondary: #CBD5E1;
+      --border-hairline: #1E293B;
+      --border-control: #64748B;
+      --accent-primary: #60A5FA;
+      --accent-contrast: #090D16;
+      --accent-secondary: #FBBF24;
+      --status-ok: #34D399;
+      --danger-text: #FCA5A5;
+      --danger-border: #EF4444;
+    }
+
+    body {
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+      font-family: 'Source Sans 3', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      caret-color: var(--accent-primary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    h1 {
+      font-size: clamp(1.65rem, 2vw + 0.6rem, 2.15rem);
+      line-height: 1.22;
+      font-weight: 800;
+    }
+
+    h2 {
+      font-size: 1.55rem;
+      line-height: 1.3;
+      font-weight: 700;
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      line-height: 1.35;
+      font-weight: 700;
+    }
+
+    ::selection {
+      background-color: var(--accent-primary);
+      color: var(--accent-contrast);
+    }
+
+    /* R-39: Base layer cursor rules */
+    a[href],
+    button:not(:disabled),
+    summary,
+    select:not(:disabled),
+    label[for],
+    input[type='checkbox']:not(:disabled),
+    input[type='radio']:not(:disabled),
+    [role='button']:not([aria-disabled='true']),
+    [role='tab']:not([aria-disabled='true']),
+    [role='switch']:not([aria-disabled='true']) {
+      cursor: pointer;
+    }
+
+    button:disabled,
+    input:disabled,
+    select:disabled,
+    textarea:disabled,
+    [aria-disabled='true'] {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    /* R-32: Indikator fokus keyboard terlihat jelas */
+    :focus-visible {
+      outline: 2px solid var(--accent-primary);
+      outline-offset: 2px;
+    }
+
+    .surface-canvas {
+      background-color: var(--bg-canvas);
+      color: var(--text-primary);
+    }
+
+    .surface-card {
+      background-color: var(--bg-surface);
+      border-color: var(--border-hairline);
+      border-radius: 16px;
+      padding: 1.25rem;
+    }
+
+    .surface-elevated {
+      background-color: var(--bg-elevated);
+      border-color: var(--border-hairline);
+    }
+
+    .surface-banner {
+      background-color: var(--bg-surface);
+      border-color: var(--border-control);
+      color: var(--text-primary);
+    }
+
+    .banner-tag {
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+    }
+
+    .border-structural {
+      border-color: var(--border-hairline);
+    }
+
+    .border-interactive {
+      border-color: var(--border-control);
+    }
+
+    .text-main {
+      color: var(--text-primary);
+    }
+
+    .text-muted {
+      color: var(--text-secondary);
+    }
+
+    .text-accent {
+      color: var(--accent-primary);
+    }
+
+    .btn-primary {
+      background-color: var(--accent-primary);
+      color: var(--accent-contrast);
+      border: 1px solid var(--accent-primary);
+      border-radius: 10px;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.08);
+    }
+
+    .btn-primary:active {
+      transform: translateY(1px);
+    }
+
+    .btn-secondary {
+      background-color: var(--bg-surface);
+      color: var(--text-primary);
+      border: 1px solid var(--border-control);
+      border-radius: 10px;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent-primary);
+      color: var(--accent-primary);
+    }
+
+    .btn-secondary:active {
+      transform: translateY(1px);
+    }
+
+    .btn-danger {
+      background-color: var(--bg-surface);
+      color: var(--danger-text);
+      border: 1px solid var(--danger-border);
+      border-radius: 10px;
+    }
+
+    .btn-danger:hover {
+      background-color: var(--danger-border);
+      color: #FFFFFF;
+    }
+
+    .input-field {
+      background-color: var(--bg-surface);
+      color: var(--text-primary);
+      border: 1px solid var(--border-control);
+      border-radius: 10px;
+    }
+
+    .input-field::placeholder {
+      color: var(--text-secondary);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+
+  <!-- R-40: Gunakan defer agar tidak memblokir render awal -->
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+  <script src="config.js" defer></script>
+</head>
+
+<body class="surface-canvas antialiased min-h-screen flex flex-col">
+
+  <!-- Banner instruksi setup apabila config.js masih berisi nilai placeholder -->
+  <div id="setup-banner-container" class="hidden"></div>
+
+  <!-- Wadah Notifikasi Status Operasi -->
+  <div id="toast-container" role="status" aria-live="polite"
+    class="fixed bottom-5 right-5 z-50 flex flex-col gap-2.5 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+
+  <!-- Header Admin Console -->
+  <header class="sticky top-0 z-30 surface-canvas border-b border-structural">
+    <div
+      class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-[70px] flex flex-wrap items-center justify-between gap-3 py-2">
+      <a href="index.html" class="flex items-center gap-2.5">
+        <span class="w-9 h-9 rounded-[10px] flex items-center justify-center text-sm font-extrabold"
+          style="background-color: var(--accent-primary); color: var(--accent-contrast);">
+          AZ
+        </span>
+        <div>
+          <span class="text-lg font-extrabold text-main tracking-tight block leading-none">
+            ANZA Tech
+          </span>
+          <span class="text-xs text-muted block mt-0.5">
+            Pengelolaan Katalog &amp; Gambar Aplikasi
+          </span>
+        </div>
+      </a>
+
+      <div class="flex flex-wrap items-center gap-2">
+        <div id="admin-user-pill"
+          class="hidden sm:inline-flex items-center gap-2 px-3 py-2 border border-structural surface-card text-xs font-semibold text-main">
+          <span class="w-2 h-2 rounded-full" style="background-color: var(--status-ok);" aria-hidden="true"></span>
+          <span id="admin-user-email" class="truncate max-w-[200px]">admin@anzatech.id</span>
+        </div>
+
+        <button type="button" onclick="window.PortfolioConfig.toggleTheme()"
+          class="min-h-[44px] px-3.5 py-2 rounded-[10px] text-sm font-semibold btn-secondary transition"
+          aria-label="Ganti tampilan terang atau gelap">
+          <span data-theme-label>Tampilan Gelap</span>
+        </button>
+
+        <a href="index.html"
+          class="min-h-[44px] px-3.5 py-2 rounded-[10px] text-sm font-semibold btn-secondary inline-flex items-center transition">
+          Lihat Halaman Utama
+        </a>
+
+        <button id="logout-btn" type="button" onclick="handleLogout()"
+          class="hidden min-h-[44px] px-3.5 py-2 rounded-[10px] text-sm font-semibold btn-danger transition">
+          Keluar
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 flex flex-col">
+    <!-- VIEW 1: FORM LOGIN SUPABASE AUTH -->
+    <section id="login-view" class="flex-1 flex items-center justify-center p-4 sm:p-6">
+      <div class="w-full max-w-md surface-card border border-interactive p-6 sm:p-8">
+        <div class="pb-4 mb-6 border-b border-structural">
+          <h1 class="text-main">
+            Masuk ke Admin ANZA Tech
+          </h1>
+          <p class="text-sm text-muted mt-1">
+            Masukkan email dan kata sandi admin untuk menambah atau mengubah daftar aplikasi.
+          </p>
+        </div>
+
+        <div id="login-error-box" role="alert" class="hidden mb-5 pb-3 border-b text-sm leading-relaxed"
+          style="border-color: var(--danger-border); color: var(--danger-text);">
+          <p class="font-bold mb-1">Belum Berhasil Masuk</p>
+          <span id="login-error-text">Email atau kata sandi tidak sesuai.</span>
+        </div>
+
+        <form id="login-form" class="space-y-4">
+          <div>
+            <label for="login-email" class="block text-sm font-bold text-main mb-1.5">
+              Email Admin
+            </label>
+            <input id="login-email" type="email" required autocomplete="email" placeholder="nama@anzatech.id"
+              class="w-full min-h-[44px] px-3.5 py-2 rounded-[10px] text-sm input-field" />
+          </div>
+
+          <div>
+            <label for="login-password" class="block text-sm font-bold text-main mb-1.5">
+              Kata Sandi (Password)
+            </label>
+            <div class="flex items-stretch gap-2">
+              <input id="login-password" type="password" required autocomplete="current-password"
+                placeholder="Masukkan kata sandi"
+                class="flex-1 min-h-[44px] px-3.5 py-2 rounded-[10px] text-sm input-field" />
+              <button id="toggle-pwd-btn" type="button" onclick="togglePasswordVisibility()"
+                class="min-h-[44px] px-3.5 py-2 rounded-[10px] text-xs font-semibold btn-secondary"
+                aria-label="Tampilkan atau sembunyikan kata sandi">
+                Lihat
+              </button>
+            </div>
+          </div>
+
+          <button id="login-submit-btn" type="submit"
+            class="w-full min-h-[46px] px-5 py-2.5 rounded-[10px] text-sm font-bold btn-primary transition">
+            <span id="login-submit-text">Masuk ke Dashboard Admin</span>
+          </button>
+        </form>
+
+        <!-- Mode Simulasi Lokal jika kredensial Supabase belum diisi -->
+        <div id="demo-login-helper" class="hidden mt-6 pt-5 border-t border-structural">
+          <p class="text-sm text-muted mb-3 leading-relaxed">
+            Belum menghubungkan database Supabase? Anda tetap bisa langsung masuk untuk mengubah teks dan mengunggah
+            gambar di browser ini:
+          </p>
+          <button type="button" onclick="enterLocalDemoMode()"
+            class="w-full min-h-[44px] px-4 py-2.5 rounded-[10px] text-sm font-bold btn-secondary transition">
+            Buka Mode Pratinjau Lokal (Langsung Edit)
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 2: DASHBOARD ADMIN & CRUD PORTOFOLIO -->
+    <div id="dashboard-view" class="hidden flex-1 py-8 sm:py-10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+
+        <!-- Ringkasan Statistik Katalog -->
+        <section aria-label="Ringkasan Statistik Katalog"
+          class="grid grid-cols-1 sm:grid-cols-3 border border-structural surface-card divide-y sm:divide-y-0 sm:divide-x divide-structural">
+          <div class="p-5 sm:p-6">
+            <p class="text-sm font-semibold text-muted">Total Aplikasi</p>
+            <p id="stat-total-projects" class="text-3xl font-extrabold text-main mt-1">0</p>
+            <p class="text-xs text-muted mt-1">Jumlah aplikasi yang tampil di halaman depan</p>
+          </div>
+
+          <div class="p-5 sm:p-6">
+            <p class="text-sm font-semibold text-muted">Aplikasi Pilihan Utama</p>
+            <p id="stat-featured-projects" class="text-3xl font-extrabold text-accent mt-1">0</p>
+            <p class="text-xs text-muted mt-1">Ditampilkan paling atas pada katalog</p>
+          </div>
+
+          <div class="p-5 sm:p-6">
+            <p class="text-sm font-semibold text-muted">Jenis Kategori Terisi</p>
+            <p id="stat-total-categories" class="text-3xl font-extrabold text-main mt-1">0</p>
+            <p class="text-xs text-muted mt-1">Kategori layanan yang memiliki daftar proyek</p>
+          </div>
+        </section>
+
+        <!-- Grid Utama: Form Tambah/Edit (Kiri) & Tabel Manajemen (Kanan) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+          <!-- FORM TAMBAH & EDIT PROYEK -->
+          <section id="project-form-card" aria-labelledby="form-mode-title"
+            class="lg:col-span-5 surface-card border border-structural p-5 sm:p-6">
+            <div class="flex flex-wrap items-center justify-between gap-2 pb-4 mb-5 border-b border-structural">
+              <div>
+                <h2 id="form-mode-title" class="text-main">
+                  Tambah Aplikasi Baru
+                </h2>
+                <p id="form-mode-subtitle" class="text-sm text-muted mt-0.5">
+                  Isi keterangan aplikasi dengan bahasa yang mudah dipahami calon pelanggan
+                </p>
+              </div>
+
+              <button id="cancel-edit-btn" type="button" onclick="resetProjectForm()"
+                class="hidden min-h-[44px] px-3.5 py-2 rounded-[10px] text-xs font-bold btn-secondary">
+                Batal Edit
+              </button>
+            </div>
+
+            <form id="project-form" class="space-y-4">
+              <input type="hidden" id="project-id" value="" />
+
+              <div>
+                <label for="project-title" class="block text-sm font-bold text-main mb-1.5">
+                  Nama Aplikasi / Pekerjaan *
+                </label>
+                <input id="project-title" type="text" required
+                  placeholder="Contoh: Aplikasi Absensi Karyawan via HP & Hitung Gaji"
+                  class="w-full min-h-[44px] px-3.5 py-2 rounded-[10px] text-sm input-field" />
+              </div>
+
+              <div>
+                <label for="project-category" class="block text-sm font-bold text-main mb-1.5">
+                  Jenis Kategori *
+                </label>
+                <select id="project-category" required
+                  class="w-full min-h-[44px] px-3.5 py-2 rounded-[10px] text-sm input-field">
+                  <option value="Web App">Sistem Kantor &amp; Pabrik (Web App)</option>
+                  <option value="Mobile & PWA">Aplikasi HP &amp; Absensi (Mobile &amp; PWA)</option>
+                  <option value="Desktop & POS">Program Kasir Toko (Desktop &amp; POS)</option>
+                  <option value="IT Infrastructure">Jaringan &amp; Server (IT Infrastructure)</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="project-description" class="block text-sm font-bold text-main mb-1.5">
+                  Penjelasan Kegunaan Aplikasi *
+                </label>
+                <textarea id="project-description" rows="4" required
+                  placeholder="Jelaskan manfaat aplikasi ini bagi pemilik usaha dengan bahasa sehari-hari..."
+                  class="w-full px-3.5 py-2.5 rounded-[10px] text-sm input-field"></textarea>
+              </div>
+
+              <div>
+                <label for="project-tech-stack" class="block text-sm font-bold text-main mb-1.5">
+                  Fitur Utama / Teknologi (Pisahkan dengan Koma) *
+                </label>
+                <input id="project-tech-stack" type="text" required
+                  placeholder="Contoh: Buka di HP, Foto Selfie & GPS, Hitung Lembur Otomatis"
+                  class="w-full min-h-[44px] px-3.5 py-2 rounded-[10px] text-sm input-field" />
+                <p class="text-xs text-muted mt-1">
+                  Pisahkan setiap poin dengan tanda koma (,).
+                </p>
+                <div id="tech-stack-preview" class="flex flex-wrap gap-1.5 mt-2"></div>
+              </div>
+
+              <!-- Upload Multi-Gambar ke Bucket portfolio-images & Input Manual (Tanpa Nested Card) -->
+              <div class="pt-4 border-t border-structural space-y-3">
+                <div class="flex items-center justify-between gap-2">
+                  <span class="text-sm font-bold text-accent">
+                    Foto / Screenshot Tampilan Aplikasi (Bisa Banyak File)
+                  </span>
+                  <span class="font-mono text-xs text-muted">bucket: portfolio-images</span>
+                </div>
+
+                <div>
+                  <label for="image-file-input"
+                    class="min-h-[44px] px-4 py-2.5 rounded-[10px] text-sm font-bold btn-secondary flex items-center justify-center text-center transition">
+                    <span id="upload-btn-label">Pilih Satu atau Beberapa Gambar Sekaligus</span>
+                  </label>
+                  <input id="image-file-input" type="file" multiple accept="image/png,image/jpeg,image/webp,image/gif"
+                    class="sr-only" />
+                  <p id="upload-status-text" class="text-xs text-muted mt-1.5">
+                    Bisa memilih banyak file sekaligus (JPG, PNG, WebP, maks. 5MB/file). Gambar pertama menjadi sampul
+                    utama.
+                  </p>
+                </div>
+
+                <div>
+                  <label for="project-image-url" class="block text-xs font-semibold text-muted mb-1">
+                    Atau tempelkan link URL gambar:
+                  </label>
+                  <div class="flex items-stretch gap-2">
+                    <input id="project-image-url" type="url" placeholder="https://..."
+                      class="flex-1 min-h-[44px] px-3 py-2 rounded-[10px] text-sm input-field" />
+                    <button type="button" onclick="addManualImageUrl()"
+                      class="min-h-[44px] px-3.5 py-2 rounded-[10px] text-xs font-bold btn-secondary flex-shrink-0">
+                      + Tambah Gambar
+                    </button>
+                  </div>
+                </div>
+
+                <div id="image-preview-wrapper" class="hidden pt-2 space-y-3">
+                  <div class="flex items-center justify-between text-xs">
+                    <span id="gallery-count-badge" class="font-bold text-accent">1 Gambar Terdaftar</span>
+                    <button type="button" onclick="clearImageField()"
+                      class="min-h-[36px] px-3 py-1 rounded-[10px] text-xs font-semibold btn-danger">
+                      Hapus Semua Gambar
+                    </button>
+                  </div>
+
+                  <div class="aspect-video border border-structural rounded-xl overflow-hidden">
+                    <img id="image-preview-el"
+                      src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 675'%3E%3C/svg%3E"
+                      alt="Pratinjau sampul utama proyek" width="1200" height="675" class="w-full h-full object-cover"
+                      onerror="this.onerror=null;this.src=window.PortfolioConfig.DEFAULT_PROJECT_IMAGE;" />
+                  </div>
+
+                  <!-- Daftar Thumbnail Galeri Screenshot -->
+                  <div id="image-gallery-list" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5"></div>
+                </div>
+              </div>
+
+              <div class="pt-4 border-t border-structural grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label for="project-demo-url" class="block text-sm font-bold text-main mb-1.5">
+                    Link Contoh / Demo (Opsional)
+                  </label>
+                  <input id="project-demo-url" type="text" placeholder="https://..."
+                    class="w-full min-h-[44px] px-3 py-2 rounded-[10px] text-sm input-field" />
+                </div>
+
+                <div>
+                  <label for="project-repo-url" class="block text-sm font-bold text-main mb-1.5">
+                    Link Dokumentasi / Repo (Opsional)
+                  </label>
+                  <input id="project-repo-url" type="url" placeholder="https://..."
+                    class="w-full min-h-[44px] px-3 py-2 rounded-[10px] text-sm input-field" />
+                </div>
+              </div>
+
+              <label for="project-is-featured"
+                class="min-h-[52px] flex items-center justify-between gap-3 pt-4 border-t border-structural">
+                <div>
+                  <span class="block text-sm font-bold text-main">
+                    Jadikan Pilihan Utama (Tampil Paling Atas)
+                  </span>
+                  <span class="block text-xs text-muted">
+                    Aplikasi ini akan diprioritaskan pada urutan atas halaman utama
+                  </span>
+                </div>
+                <input id="project-is-featured" type="checkbox" class="w-5 h-5 accent-blue-700" />
+              </label>
+
+              <div class="pt-2">
+                <button id="form-submit-btn" type="submit"
+                  class="w-full min-h-[46px] px-5 py-3 rounded-[10px] text-sm font-bold btn-primary transition">
+                  <span id="form-submit-text">Simpan Aplikasi</span>
+                </button>
+              </div>
+            </form>
+          </section>
+
+          <!-- TABEL MANAJEMEN PROYEK -->
+          <section aria-labelledby="table-section-title"
+            class="lg:col-span-7 surface-card border border-structural p-5 sm:p-6">
+            <div
+              class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 pb-4 mb-5 border-b border-structural">
+              <div>
+                <h2 id="table-section-title" class="text-main">
+                  Daftar Aplikasi di Katalog ANZA Tech
+                </h2>
+                <p class="text-sm text-muted mt-0.5">
+                  Klik tombol <strong>Edit</strong> pada baris aplikasi untuk mengubah judul, penjelasan, atau menambah
+                  foto tampilan
+                </p>
+              </div>
+
+              <div class="flex flex-wrap items-end gap-2">
+                <div>
+                  <label for="admin-search-input" class="block text-xs font-semibold text-muted mb-1">
+                    Cari di tabel:
+                  </label>
+                  <input id="admin-search-input" type="search" placeholder="Ketik nama aplikasi..."
+                    class="min-h-[44px] px-3 py-2 rounded-[10px] text-sm input-field" />
+                </div>
+                <button type="button" onclick="fetchAdminProjects()"
+                  class="min-h-[44px] px-3.5 py-2 rounded-[10px] text-sm font-semibold btn-secondary">
+                  Muat Ulang
+                </button>
+              </div>
+            </div>
+
+            <!-- Loading State Tabel (R-27) -->
+            <div id="admin-table-loading" role="status" class="hidden py-8 text-center text-sm text-muted">
+              Sedang mengambil daftar aplikasi...
+            </div>
+
+            <!-- Error State Tabel (R-27) -->
+            <div id="admin-table-error" role="alert" class="hidden pb-4 border-b mb-4 text-sm"
+              style="border-color: var(--danger-border); color: var(--danger-text);">
+              <p class="font-bold">Gagal Memuat Daftar Aplikasi</p>
+              <p id="admin-table-error-text" class="mt-1"></p>
+            </div>
+
+            <!-- Tabel Proyek -->
+            <div class="overflow-x-auto">
+              <table class="w-full text-left border-collapse">
+                <thead>
+                  <tr class="border-b border-structural text-xs font-bold text-muted uppercase">
+                    <th class="py-3 px-3">Nama Aplikasi &amp; Penjelasan</th>
+                    <th class="py-3 px-3">Kategori</th>
+                    <th class="py-3 px-3">Fitur / Tag</th>
+                    <th class="py-3 px-3 text-right">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="admin-projects-tbody" class="divide-y divide-structural text-sm"></tbody>
+              </table>
+            </div>
+
+            <!-- Empty State Tabel (R-27) -->
+            <div id="admin-table-empty" class="hidden py-10 text-center space-y-2">
+              <p class="text-xs font-bold text-accent uppercase">Belum Ada Data</p>
+              <p class="text-base font-bold text-main">
+                Tidak ada aplikasi yang cocok dengan pencarian Anda
+              </p>
+              <p class="text-sm text-muted">
+                Gunakan formulir di sebelah kiri untuk menambahkan aplikasi baru atau hapus kata pencarian.
+              </p>
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL KONFIRMASI HAPUS PROYEK -->
+  <div id="delete-modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4"
+    style="background-color: rgba(11, 13, 16, 0.85);" role="dialog" aria-modal="true"
+    aria-labelledby="delete-modal-title">
+    <div class="w-full max-w-md surface-card border border-interactive p-6">
+      <h3 id="delete-modal-title" class="text-main">
+        Hapus Aplikasi Ini dari Katalog?
+      </h3>
+      <p class="text-sm text-muted mt-2 leading-relaxed">
+        Anda akan menghapus <strong id="delete-project-title" class="text-main"></strong>. Tindakan ini tidak dapat
+        dibatalkan.
+      </p>
+      <div class="mt-6 flex flex-wrap items-center justify-end gap-2.5">
+        <button id="cancel-delete-btn" type="button" onclick="closeDeleteModal()"
+          class="min-h-[44px] px-4 py-2 rounded-[10px] text-sm font-semibold btn-secondary">
+          Batal
+        </button>
+        <button id="confirm-delete-btn" type="button" onclick="confirmDeleteProject()"
+          class="min-h-[44px] px-4 py-2 rounded-[10px] text-sm font-bold btn-danger">
+          Ya, Hapus
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let adminProjects = [];
+    let adminSearchQuery = '';
+    let pendingDeleteId = null;
+    let isLocalDemoMode = false;
+    let currentProjectImages = [];
+
+    const LOCAL_STORAGE_KEY = 'anza_tech_projects_v12';
+
+    function escapeHtml(value) {
+      if (value === null || value === undefined) return '';
+      return String(value)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    function parseTechStackInput(inputStr) {
+      if (Array.isArray(inputStr)) return inputStr;
+      if (!inputStr || typeof inputStr !== 'string') return [];
+      return inputStr
+        .split(',')
+        .map((item) => item.trim())
+        .filter(Boolean);
+    }
+
+    function getProjectImagesList(project) {
+      if (
+        window.PortfolioConfig &&
+        typeof window.PortfolioConfig.normalizeProjectImages === 'function'
+      ) {
+        return window.PortfolioConfig.normalizeProjectImages(project);
+      }
+      if (Array.isArray(project?.image_urls) && project.image_urls.length > 0) {
+        return project.image_urls.filter(Boolean);
+      }
+      if (project?.image_url && project.image_url.trim() !== '') {
+        return [project.image_url.trim()];
+      }
+      return [];
+    }
+
+    function getFriendlyCategory(category) {
+      if (
+        window.PortfolioConfig &&
+        typeof window.PortfolioConfig.getFriendlyCategoryLabel === 'function'
+      ) {
+        return window.PortfolioConfig.getFriendlyCategoryLabel(category);
+      }
+      return category || 'Aplikasi Usaha';
+    }
+
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      const statusLabel =
+        type === 'error' ? 'Perhatian' : type === 'warning' ? 'Info' : 'Berhasil';
+
+      toast.className =
+        'pointer-events-auto surface-card border border-interactive p-4 text-sm leading-relaxed shadow-lg';
+      toast.innerHTML = `
+        <p class="font-bold text-accent mb-0.5">${statusLabel}</p>
+        <p class="text-main">${escapeHtml(message)}</p>
+      `;
+
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.remove();
+      }, 3800);
+    }
+
+    function togglePasswordVisibility() {
+      const pwdInput = document.getElementById('login-password');
+      const btn = document.getElementById('toggle-pwd-btn');
+      if (!pwdInput || !btn) return;
+
+      const isHidden = pwdInput.type === 'password';
+      pwdInput.type = isHidden ? 'text' : 'password';
+      btn.textContent = isHidden ? 'Sembunyikan' : 'Lihat';
+    }
+
+    function setAuthenticatedUI(isAuthenticated, userEmail = '') {
+      const loginView = document.getElementById('login-view');
+      const dashboardView = document.getElementById('dashboard-view');
+      const logoutBtn = document.getElementById('logout-btn');
+      const userPill = document.getElementById('admin-user-pill');
+      const userEmailEl = document.getElementById('admin-user-email');
+
+      if (isAuthenticated) {
+        loginView.classList.add('hidden');
+        dashboardView.classList.remove('hidden');
+        logoutBtn.classList.remove('hidden');
+        userPill.classList.remove('hidden');
+        userPill.classList.add('sm:inline-flex');
+        userEmailEl.textContent = userEmail || 'Admin ANZA Tech';
+        fetchAdminProjects();
+      } else {
+        loginView.classList.remove('hidden');
+        dashboardView.classList.add('hidden');
+        logoutBtn.classList.add('hidden');
+        userPill.classList.add('hidden');
+        userPill.classList.remove('sm:inline-flex');
+      }
+    }
+
+    function enterLocalDemoMode() {
+      isLocalDemoMode = true;
+      setAuthenticatedUI(true, 'Mode Pratinjau Lokal');
+      showToast('Mode Pratinjau Lokal aktif. Perubahan langsung tampil di halaman utama browser ini.', 'warning');
+    }
+
+    async function initAuthSession() {
+      const { isSupabaseConfigured, supabaseClient } = window.PortfolioConfig;
+      const demoHelper = document.getElementById('demo-login-helper');
+
+      if (!isSupabaseConfigured() || !supabaseClient) {
+        if (demoHelper) demoHelper.classList.remove('hidden');
+        setAuthenticatedUI(false);
+        return;
+      }
+
+      try {
+        const {
+          data: { session }
+        } = await supabaseClient.auth.getSession();
+
+        if (session && session.user) {
+          setAuthenticatedUI(true, session.user.email);
+        } else {
+          setAuthenticatedUI(false);
+        }
+
+        supabaseClient.auth.onAuthStateChange((_event, currentSession) => {
+          if (currentSession && currentSession.user) {
+            setAuthenticatedUI(true, currentSession.user.email);
+          } else if (!isLocalDemoMode) {
+            setAuthenticatedUI(false);
+          }
+        });
+      } catch (err) {
+        console.error('[Supabase Auth Error]:', err);
+        setAuthenticatedUI(false);
+      }
+    }
+
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+
+      const email = document.getElementById('login-email').value.trim();
+      const password = document.getElementById('login-password').value;
+      const submitBtn = document.getElementById('login-submit-btn');
+      const submitText = document.getElementById('login-submit-text');
+      const errorBox = document.getElementById('login-error-box');
+      const errorText = document.getElementById('login-error-text');
+
+      errorBox.classList.add('hidden');
+
+      const { isSupabaseConfigured, supabaseClient } = window.PortfolioConfig;
+      if (!isSupabaseConfigured() || !supabaseClient) {
+        errorText.textContent =
+          'Database Supabase di config.js belum diisi. Silakan isi SUPABASE_URL dan SUPABASE_ANON_KEY terlebih dahulu, atau klik tombol "Buka Mode Pratinjau Lokal" di bawah.';
+        errorBox.classList.remove('hidden');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitText.textContent = 'Memeriksa Akun...';
+
+      try {
+        const { data, error } = await supabaseClient.auth.signInWithPassword({
+          email,
+          password
+        });
+
+        if (error) throw error;
+
+        if (data?.user) {
+          showToast('Berhasil masuk ke halaman Admin ANZA Tech.');
+          setAuthenticatedUI(true, data.user.email);
+        }
+      } catch (err) {
+        errorText.textContent =
+          err.message || 'Gagal masuk. Periksa kembali email dan kata sandi Anda.';
+        errorBox.classList.remove('hidden');
+      } finally {
+        submitBtn.disabled = false;
+        submitText.textContent = 'Masuk ke Dashboard Admin';
+      }
+    }
+
+    async function handleLogout() {
+      const { isSupabaseConfigured, supabaseClient } = window.PortfolioConfig;
+
+      if (isLocalDemoMode) {
+        isLocalDemoMode = false;
+        setAuthenticatedUI(false);
+        showToast('Keluar dari Mode Pratinjau Lokal.');
+        return;
+      }
+
+      if (isSupabaseConfigured() && supabaseClient) {
+        await supabaseClient.auth.signOut();
+      }
+      setAuthenticatedUI(false);
+      showToast('Anda telah keluar dari halaman Admin.');
+    }
+
+    async function fetchAdminProjects() {
+      const loadingEl = document.getElementById('admin-table-loading');
+      const errorEl = document.getElementById('admin-table-error');
+      const errorTextEl = document.getElementById('admin-table-error-text');
+
+      if (loadingEl) loadingEl.classList.remove('hidden');
+      if (errorEl) errorEl.classList.add('hidden');
+
+      const { isSupabaseConfigured, supabaseClient, FALLBACK_PROJECTS } = window.PortfolioConfig;
+
+      if (isSupabaseConfigured() && supabaseClient && !isLocalDemoMode) {
+        try {
+          const { data, error } = await supabaseClient
+            .from('projects')
+            .select('*')
+            .order('is_featured', { ascending: false })
+            .order('created_at', { ascending: false });
+
+          if (error) throw error;
+          adminProjects = Array.isArray(data) ? data : [];
+        } catch (err) {
+          console.error('[Fetch Admin Projects Error]:', err);
+          if (errorTextEl) errorTextEl.textContent = err.message || 'Gagal memuat daftar aplikasi.';
+          if (errorEl) errorEl.classList.remove('hidden');
+          adminProjects = [];
+        }
+      } else {
+        const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+        if (saved) {
+          try {
+            adminProjects = JSON.parse(saved);
+          } catch {
+            adminProjects = [...FALLBACK_PROJECTS];
+          }
+        } else {
+          adminProjects = [...FALLBACK_PROJECTS];
+          localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(adminProjects));
+        }
+      }
+
+      if (loadingEl) loadingEl.classList.add('hidden');
+      updateStatsSummary();
+      renderAdminTable();
+    }
+
+    function updateStatsSummary() {
+      const totalEl = document.getElementById('stat-total-projects');
+      const featuredEl = document.getElementById('stat-featured-projects');
+      const categoriesEl = document.getElementById('stat-total-categories');
+
+      const totalCount = adminProjects.length;
+      const featuredCount = adminProjects.filter((p) => Boolean(p.is_featured)).length;
+      const uniqueCategories = new Set(
+        adminProjects.map((p) => (p.category || '').trim()).filter(Boolean)
+      );
+
+      if (totalEl) totalEl.textContent = totalCount;
+      if (featuredEl) featuredEl.textContent = featuredCount;
+      if (categoriesEl) categoriesEl.textContent = uniqueCategories.size;
+    }
+
+    function renderAdminTable() {
+      const tbody = document.getElementById('admin-projects-tbody');
+      const emptyEl = document.getElementById('admin-table-empty');
+      if (!tbody) return;
+
+      const query = adminSearchQuery.trim().toLowerCase();
+      const filtered = adminProjects.filter((p) => {
+        if (!query) return true;
+        const inTitle = (p.title || '').toLowerCase().includes(query);
+        const inCat = (p.category || '').toLowerCase().includes(query);
+        const inFriendlyCat = getFriendlyCategory(p.category).toLowerCase().includes(query);
+        const inStack = parseTechStackInput(p.tech_stack).some((t) =>
+          t.toLowerCase().includes(query)
+        );
+        return inTitle || inCat || inFriendlyCat || inStack;
+      });
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = '';
+        emptyEl.classList.remove('hidden');
+        return;
+      }
+
+      emptyEl.classList.add('hidden');
+      const fallbackImg = window.PortfolioConfig.DEFAULT_PROJECT_IMAGE;
+
+      tbody.innerHTML = filtered
+        .map((project) => {
+          const stack = parseTechStackInput(project.tech_stack);
+          const gallery = getProjectImagesList(project);
+          const thumbUrl = gallery[0] || fallbackImg;
+          const imgCount = gallery.length;
+          const friendlyCat = getFriendlyCategory(project.category);
+
+          return `
+            <tr class="align-top">
+              <td class="py-4 px-3">
+                <div class="flex items-start gap-3">
+                  <div class="relative flex-shrink-0">
+                    <img
+                      src="${escapeHtml(thumbUrl)}"
+                      alt="Thumbnail ${escapeHtml(project.title)}"
+                      width="96"
+                      height="54"
+                      onerror="this.onerror=null;this.src='${escapeHtml(fallbackImg)}';"
+                      class="w-20 h-12 object-cover rounded-md border border-structural surface-canvas"
+                    />
+                    ${imgCount > 1
+              ? `<span class="absolute -bottom-1.5 -right-1.5 px-1.5 py-0.5 rounded text-[11px] font-bold surface-card border border-interactive text-accent">${imgCount} Foto</span>`
+              : ''
+            }
+                  </div>
+                  <div class="min-w-0">
+                    <div class="flex flex-wrap items-center gap-2">
+                      <p class="font-bold text-main">
+                        ${escapeHtml(project.title)}
+                      </p>
+                      ${project.is_featured
+              ? `<span class="px-2 py-0.5 rounded text-xs font-bold border banner-tag">Pilihan Utama</span>`
+              : ''
+            }
+                    </div>
+                    <p class="text-xs sm:text-sm text-muted mt-1 max-w-xs">
+                      ${escapeHtml((project.description || '').slice(0, 110))}${(project.description || '').length > 110 ? '...' : ''
+            }
+                    </p>
+                  </div>
+                </div>
+              </td>
+
+              <td class="py-4 px-3 whitespace-nowrap">
+                <span class="px-2.5 py-1 rounded-md text-xs font-semibold border border-structural surface-canvas text-main">
+                  ${escapeHtml(friendlyCat)}
+                </span>
+              </td>
+
+              <td class="py-4 px-3">
+                <div class="flex flex-wrap gap-1 max-w-[190px]">
+                  ${stack
+              .slice(0, 4)
+              .map(
+                (tech) => `
+                    <span class="px-2 py-0.5 rounded text-xs surface-canvas text-main border border-structural">
+                      ${escapeHtml(tech)}
+                    </span>
+                  `
+              )
+              .join('')}
+                  ${stack.length > 4
+              ? `<span class="px-1.5 py-0.5 rounded text-xs surface-elevated text-muted">+${stack.length - 4
+              }</span>`
+              : ''
+            }
+                </div>
+              </td>
+
+              <td class="py-4 px-3 text-right whitespace-nowrap">
+                <div class="inline-flex items-center gap-2">
+                  <button
+                    type="button"
+                    onclick="loadProjectIntoForm('${escapeHtml(project.id)}')"
+                    class="min-h-[44px] px-3.5 py-2 rounded-[10px] text-xs font-bold btn-secondary transition"
+                  >
+                    Edit
+                  </button>
+                  <button
+                    type="button"
+                    onclick="openDeleteModal('${escapeHtml(project.id)}')"
+                    class="min-h-[44px] px-3.5 py-2 rounded-[10px] text-xs font-bold btn-danger transition"
+                  >
+                    Hapus
+                  </button>
+                </div>
+              </td>
+            </tr>
+          `;
+        })
+        .join('');
+    }
+
+    function updateTechStackPreview() {
+      const input = document.getElementById('project-tech-stack');
+      const preview = document.getElementById('tech-stack-preview');
+      if (!input || !preview) return;
+
+      const items = parseTechStackInput(input.value);
+      preview.innerHTML = items
+        .map(
+          (tech) => `
+        <span class="px-2.5 py-0.5 rounded text-xs font-semibold surface-canvas text-main border border-structural">
+          ${escapeHtml(tech)}
+        </span>
+      `
+        )
+        .join('');
+    }
+
+    function renderImageGalleryPreview() {
+      const wrapper = document.getElementById('image-preview-wrapper');
+      const imgEl = document.getElementById('image-preview-el');
+      const listEl = document.getElementById('image-gallery-list');
+      const countBadge = document.getElementById('gallery-count-badge');
+      if (!wrapper || !imgEl || !listEl) return;
+
+      const fallbackImg = window.PortfolioConfig.DEFAULT_PROJECT_IMAGE;
+
+      if (currentProjectImages.length === 0) {
+        imgEl.src = fallbackImg;
+        listEl.innerHTML = '';
+        wrapper.classList.add('hidden');
+        return;
+      }
+
+      wrapper.classList.remove('hidden');
+      imgEl.src = currentProjectImages[0] || fallbackImg;
+      if (countBadge) {
+        countBadge.textContent = `${currentProjectImages.length} Gambar Terdaftar (Gambar #1 = Sampul Utama)`;
+      }
+
+      listEl.innerHTML = currentProjectImages
+        .map(
+          (url, index) => `
+        <div class="border ${index === 0 ? 'border-interactive' : 'border-structural'
+            } rounded-xl p-2 flex flex-col justify-between gap-2">
+          <div class="relative aspect-video rounded-md overflow-hidden border border-structural surface-canvas">
+            <img
+              src="${escapeHtml(url)}"
+              alt="Gambar aplikasi #${index + 1}"
+              width="240"
+              height="135"
+              onerror="this.onerror=null;this.src='${escapeHtml(fallbackImg)}';"
+              class="w-full h-full object-cover"
+            />
+            <span class="absolute top-1 left-1 px-1.5 py-0.5 rounded text-[11px] font-bold surface-card border border-structural text-main">
+              ${index === 0 ? '#1 Sampul' : `#${index + 1}`}
+            </span>
+          </div>
+          <div class="flex items-center justify-between gap-1">
+            ${index === 0
+              ? `<span class="text-xs font-bold text-accent px-1">Sampul Utama</span>`
+              : `<button
+                    type="button"
+                    onclick="setPrimaryImage(${index})"
+                    class="min-h-[34px] px-2 py-1 rounded-md text-xs font-semibold btn-secondary flex-1"
+                    title="Jadikan sebagai gambar sampul utama"
+                  >
+                    Jadikan Sampul
+                  </button>`
+            }
+            <button
+              type="button"
+              onclick="removeImageAtIndex(${index})"
+              class="min-h-[34px] px-2 py-1 rounded-md text-xs font-semibold btn-danger"
+              aria-label="Hapus gambar nomor ${index + 1}"
+            >
+              Hapus
+            </button>
+          </div>
+        </div>
+      `
+        )
+        .join('');
+    }
+
+    function addManualImageUrl() {
+      const urlInput = document.getElementById('project-image-url');
+      if (!urlInput) return;
+      const val = urlInput.value.trim();
+      if (!val) {
+        showToast('Tempelkan link URL gambar terlebih dahulu sebelum menekan + Tambah Gambar.', 'warning');
+        return;
+      }
+      currentProjectImages.push(val);
+      urlInput.value = '';
+      renderImageGalleryPreview();
+      showToast(`Gambar ditambahkan ke galeri (total: ${currentProjectImages.length} gambar).`);
+    }
+
+    function setPrimaryImage(index) {
+      if (index <= 0 || index >= currentProjectImages.length) return;
+      const [chosen] = currentProjectImages.splice(index, 1);
+      currentProjectImages.unshift(chosen);
+      renderImageGalleryPreview();
+      showToast('Gambar sampul utama berhasil diperbarui.');
+    }
+
+    function removeImageAtIndex(index) {
+      if (index < 0 || index >= currentProjectImages.length) return;
+      currentProjectImages.splice(index, 1);
+      renderImageGalleryPreview();
+    }
+
+    function clearImageField() {
+      const urlInput = document.getElementById('project-image-url');
+      const fileInput = document.getElementById('image-file-input');
+      if (urlInput) urlInput.value = '';
+      if (fileInput) fileInput.value = '';
+      currentProjectImages = [];
+      renderImageGalleryPreview();
+    }
+
+    function readFileAsDataUrl(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = (e) => resolve(typeof e.target?.result === 'string' ? e.target.result : '');
+        reader.onerror = () => reject(new Error(`Gagal membaca file ${file.name}`));
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function handleImageFileUpload(event) {
+      const files = Array.from(event.target.files || []);
+      if (files.length === 0) return;
+
+      const statusText = document.getElementById('upload-status-text');
+      const btnLabel = document.getElementById('upload-btn-label');
+
+      const oversized = files.find((f) => f.size > 5 * 1024 * 1024);
+      if (oversized) {
+        showToast(`Ukuran file "${oversized.name}" melebihi batas maksimal 5MB.`, 'error');
+        event.target.value = '';
+        return;
+      }
+
+      const { isSupabaseConfigured, supabaseClient, STORAGE_BUCKET } = window.PortfolioConfig;
+
+      if (!isSupabaseConfigured() || !supabaseClient || isLocalDemoMode) {
+        try {
+          const dataUrls = await Promise.all(files.map((file) => readFileAsDataUrl(file)));
+          const validUrls = dataUrls.filter(Boolean);
+          currentProjectImages.push(...validUrls);
+          renderImageGalleryPreview();
+          statusText.textContent = `${validUrls.length} gambar berhasil ditambahkan (total: ${currentProjectImages.length} gambar).`;
+          showToast(`${validUrls.length} gambar berhasil dimuat ke galeri aplikasi.`, 'warning');
+        } catch (err) {
+          showToast(err.message || 'Gagal membaca file gambar.', 'error');
+        } finally {
+          event.target.value = '';
+        }
+        return;
+      }
+
+      btnLabel.textContent = `Mengunggah ${files.length} gambar ke server...`;
+      statusText.textContent = `Mengunggah ${files.length} file ke bucket ${STORAGE_BUCKET}...`;
+
+      try {
+        const uploadedUrls = [];
+
+        for (let i = 0; i < files.length; i += 1) {
+          const file = files[i];
+          const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
+          const cleanBaseName = file.name
+            .replace(/\.[^/.]+$/, '')
+            .toLowerCase()
+            .replace(/[^a-z0-9-_]/g, '-')
+            .slice(0, 40);
+          const filePath = `projects/${Date.now()}-${i}-${cleanBaseName}.${ext}`;
+
+          const { error: uploadError } = await supabaseClient.storage
+            .from(STORAGE_BUCKET)
+            .upload(filePath, file, {
+              cacheControl: '3600',
+              upsert: false
+            });
+
+          if (uploadError) throw uploadError;
+
+          const { data: publicUrlData } = supabaseClient.storage
+            .from(STORAGE_BUCKET)
+            .getPublicUrl(filePath);
+
+          const publicUrl = publicUrlData?.publicUrl || '';
+          if (!publicUrl) {
+            throw new Error('Tidak mendapatkan Public URL dari Supabase Storage.');
+          }
+
+          uploadedUrls.push(publicUrl);
+        }
+
+        currentProjectImages.push(...uploadedUrls);
+        renderImageGalleryPreview();
+        statusText.textContent = `Berhasil mengunggah ${uploadedUrls.length} gambar (total: ${currentProjectImages.length} gambar).`;
+        showToast(`${uploadedUrls.length} gambar berhasil diunggah ke server.`);
+      } catch (err) {
+        console.error('[Storage Upload Error]:', err);
+        statusText.textContent = `Gagal mengunggah: ${err.message}`;
+        showToast(`Gagal mengunggah gambar: ${err.message}`, 'error');
+      } finally {
+        btnLabel.textContent = 'Pilih Satu atau Beberapa Gambar Sekaligus';
+        event.target.value = '';
+      }
+    }
+
+    function loadProjectIntoForm(projectId) {
+      const project = adminProjects.find((p) => String(p.id) === String(projectId));
+      if (!project) return;
+
+      document.getElementById('project-id').value = project.id;
+      document.getElementById('project-title').value = project.title || '';
+      document.getElementById('project-category').value = project.category || 'Web App';
+      document.getElementById('project-description').value = project.description || '';
+      document.getElementById('project-tech-stack').value = parseTechStackInput(
+        project.tech_stack
+      ).join(', ');
+      document.getElementById('project-image-url').value = '';
+      document.getElementById('project-demo-url').value = project.demo_url || '';
+      document.getElementById('project-repo-url').value = project.repo_url || '';
+      document.getElementById('project-is-featured').checked = Boolean(project.is_featured);
+
+      currentProjectImages = [...getProjectImagesList(project)];
+
+      document.getElementById('form-mode-title').textContent = 'Edit Aplikasi';
+      document.getElementById('form-mode-subtitle').textContent = `Sedang mengubah: ${project.title}`;
+      document.getElementById('form-submit-text').textContent = 'Simpan Perubahan';
+      document.getElementById('cancel-edit-btn').classList.remove('hidden');
+
+      updateTechStackPreview();
+      renderImageGalleryPreview();
+
+      document.getElementById('project-form-card')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+
+    function resetProjectForm() {
+      const form = document.getElementById('project-form');
+      if (form) form.reset();
+
+      document.getElementById('project-id').value = '';
+      document.getElementById('form-mode-title').textContent = 'Tambah Aplikasi Baru';
+      document.getElementById('form-mode-subtitle').textContent =
+        'Isi keterangan aplikasi dengan bahasa yang mudah dipahami calon pelanggan';
+      document.getElementById('form-submit-text').textContent = 'Simpan Aplikasi';
+      document.getElementById('cancel-edit-btn').classList.add('hidden');
+      document.getElementById('upload-status-text').textContent =
+        'Bisa memilih banyak file sekaligus (JPG, PNG, WebP, maks. 5MB/file). Gambar pertama menjadi sampul utama.';
+
+      currentProjectImages = [];
+      updateTechStackPreview();
+      renderImageGalleryPreview();
+    }
+
+    async function handleProjectFormSubmit(e) {
+      e.preventDefault();
+
+      const id = document.getElementById('project-id').value.trim();
+      const title = document.getElementById('project-title').value.trim();
+      const category = document.getElementById('project-category').value;
+      const description = document.getElementById('project-description').value.trim();
+      const techStackArray = parseTechStackInput(
+        document.getElementById('project-tech-stack').value
+      );
+      const pendingManualUrl = document.getElementById('project-image-url').value.trim();
+      if (pendingManualUrl && !currentProjectImages.includes(pendingManualUrl)) {
+        currentProjectImages.push(pendingManualUrl);
+      }
+
+      const demo_url = document.getElementById('project-demo-url').value.trim();
+      const repo_url = document.getElementById('project-repo-url').value.trim();
+      const is_featured = document.getElementById('project-is-featured').checked;
+
+      if (!title || !category || !description) {
+        showToast('Nama aplikasi, kategori, dan penjelasan wajib diisi.', 'error');
+        return;
+      }
+
+      const primaryImage = currentProjectImages[0] || null;
+      const payload = {
+        title,
+        category,
+        description,
+        tech_stack: techStackArray,
+        image_url: primaryImage,
+        image_urls: [...currentProjectImages],
+        demo_url: demo_url || null,
+        repo_url: repo_url || null,
+        is_featured
+      };
+
+      const submitBtn = document.getElementById('form-submit-btn');
+      const submitText = document.getElementById('form-submit-text');
+      submitBtn.disabled = true;
+      submitText.textContent = 'Menyimpan...';
+
+      const { isSupabaseConfigured, supabaseClient } = window.PortfolioConfig;
+
+      try {
+        if (isSupabaseConfigured() && supabaseClient && !isLocalDemoMode) {
+          if (id) {
+            const { error } = await supabaseClient
+              .from('projects')
+              .update(payload)
+              .eq('id', id);
+            if (error) {
+              if (String(error.message || '').includes('image_urls')) {
+                const { image_urls, ...legacyPayload } = payload;
+                const { error: retryErr } = await supabaseClient
+                  .from('projects')
+                  .update(legacyPayload)
+                  .eq('id', id);
+                if (retryErr) throw retryErr;
+              } else {
+                throw error;
+              }
+            }
+            showToast('Perubahan aplikasi dan gambar berhasil disimpan ke Supabase.');
+          } else {
+            const { error } = await supabaseClient.from('projects').insert([payload]);
+            if (error) {
+              if (String(error.message || '').includes('image_urls')) {
+                const { image_urls, ...legacyPayload } = payload;
+                const { error: retryErr } = await supabaseClient
+                  .from('projects')
+                  .insert([legacyPayload]);
+                if (retryErr) throw retryErr;
+              } else {
+                throw error;
+              }
+            }
+            showToast('Aplikasi baru berhasil ditambahkan ke Supabase.');
+          }
+        } else {
+          if (id) {
+            adminProjects = adminProjects.map((item) =>
+              String(item.id) === String(id) ? { ...item, ...payload } : item
+            );
+            showToast('Perubahan berhasil disimpan. Silakan cek halaman utama.');
+          } else {
+            const newProject = {
+              id: `local-${Date.now()}`,
+              ...payload,
+              created_at: new Date().toISOString()
+            };
+            adminProjects.unshift(newProject);
+            showToast('Aplikasi baru berhasil ditambahkan.');
+          }
+          localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(adminProjects));
+        }
+
+        resetProjectForm();
+        await fetchAdminProjects();
+      } catch (err) {
+        console.error('[Save Project Error]:', err);
+        showToast(`Gagal menyimpan: ${err.message}`, 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitText.textContent = document.getElementById('project-id').value
+          ? 'Simpan Perubahan'
+          : 'Simpan Aplikasi';
+      }
+    }
+
+    function openDeleteModal(projectId) {
+      const project = adminProjects.find((p) => String(p.id) === String(projectId));
+      if (!project) return;
+
+      pendingDeleteId = project.id;
+      document.getElementById('delete-project-title').textContent = `"${project.title}"`;
+      const modal = document.getElementById('delete-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.getElementById('cancel-delete-btn')?.focus();
+    }
+
+    function closeDeleteModal() {
+      pendingDeleteId = null;
+      const modal = document.getElementById('delete-modal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    async function confirmDeleteProject() {
+      if (!pendingDeleteId) return;
+
+      const confirmBtn = document.getElementById('confirm-delete-btn');
+      confirmBtn.disabled = true;
+
+      const { isSupabaseConfigured, supabaseClient } = window.PortfolioConfig;
+
+      try {
+        if (isSupabaseConfigured() && supabaseClient && !isLocalDemoMode) {
+          const { error } = await supabaseClient
+            .from('projects')
+            .delete()
+            .eq('id', pendingDeleteId);
+          if (error) throw error;
+          showToast('Aplikasi telah dihapus dari database Supabase.');
+        } else {
+          adminProjects = adminProjects.filter(
+            (p) => String(p.id) !== String(pendingDeleteId)
+          );
+          localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(adminProjects));
+          showToast('Aplikasi telah dihapus.');
+        }
+
+        if (String(document.getElementById('project-id').value) === String(pendingDeleteId)) {
+          resetProjectForm();
+        }
+
+        closeDeleteModal();
+        await fetchAdminProjects();
+      } catch (err) {
+        console.error('[Delete Project Error]:', err);
+        showToast(`Gagal menghapus: ${err.message}`, 'error');
+      } finally {
+        confirmBtn.disabled = false;
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.PortfolioConfig) {
+        window.PortfolioConfig.applyTheme(window.PortfolioConfig.getSavedTheme());
+        window.PortfolioConfig.renderSetupBanner('setup-banner-container');
+      }
+
+      document
+        .getElementById('login-form')
+        ?.addEventListener('submit', handleLoginSubmit);
+
+      document
+        .getElementById('project-form')
+        ?.addEventListener('submit', handleProjectFormSubmit);
+
+      document
+        .getElementById('project-tech-stack')
+        ?.addEventListener('input', updateTechStackPreview);
+
+      document
+        .getElementById('project-image-url')
+        ?.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            addManualImageUrl();
+          }
+        });
+
+      document
+        .getElementById('image-file-input')
+        ?.addEventListener('change', handleImageFileUpload);
+
+      document
+        .getElementById('admin-search-input')
+        ?.addEventListener('input', (e) => {
+          adminSearchQuery = e.target.value || '';
+          renderAdminTable();
+        });
+
+      const deleteModalEl = document.getElementById('delete-modal');
+      if (deleteModalEl) {
+        deleteModalEl.addEventListener('click', (e) => {
+          if (e.target === deleteModalEl) {
+            closeDeleteModal();
+          }
+        });
+      }
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          closeDeleteModal();
+        }
+      });
+
+      initAuthSession();
+    });
+  </script>
+</body>
+
+</html>

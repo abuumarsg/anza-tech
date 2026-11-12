@@ -1,0 +1,11 @@
+# IDE & Agent caches
+.gemini/
+.codex/
+.impeccable/
+.vercel/
+node_modules/
+
+# OS metadata
+.DS_Store
+Thumbs.db
+
