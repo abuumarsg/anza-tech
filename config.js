@@ -29,8 +29,8 @@ const CONSULTANT_PROFILE = {
   brandPlaceholder: 'ANZA Tech',
   name: 'ANZA Tech',
   role: 'Jasa Pembuatan Aplikasi Usaha & Solusi IT',
-  whatsappNumber: '6281234567890',
-  email: 'halo@anzatech.id',
+  whatsappNumber: '6285725951044',
+  email: 'abuumarsg@gmail.com',
   location: 'Indonesia (Layanan Online & Kunjungan Lokasi)'
 };
 
